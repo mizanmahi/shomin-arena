@@ -1,66 +1,83 @@
-import {
-   Card,
-   CardContent,
-   CardMedia,
-   Container,
-   Grid,
-   Typography,
-} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
+import Product from '../Product/Product';
+import { axiosInstance } from '../../../helpers/axiosInstance';
+import Spinner from '../../../components/Spinner/Spinner';
 
-const products = [
+/* const products = [
    {
       id: '1',
-      name: 'Shuer wired headset -SE5219',
-      price: '455',
+      name: 'Shuer headset -SE5219',
+      price: 855,
+      discountedPrice: 455,
       imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
       description:
          'An amazing classsic wireless headphone with deep bass. Available in four colors',
    },
    {
       id: '2',
-      name: 'Shuer wired headset -SE5219',
-      price: '455',
+      name: 'Shuer headset -SE5222',
+      price: 655,
+      discountedPrice: 455,
       imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
       description:
          'An amazing classsic wireless headphone with deep bass. Available in four colors',
    },
    {
       id: '3',
-      name: 'Shuer wired headset -SE5219',
-      price: '455',
+      name: 'Shuer headset -SE5247',
+      price: 655,
+      discountedPrice: 455,
       imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
       description:
          'An amazing classsic wireless headphone with deep bass. Available in four colors',
    },
    {
-      id: '3',
-      name: 'Shuer wired headset -SE5219',
-      price: '455',
+      id: '4',
+      name: 'QKZ DM10',
+      price: 555,
+      discountedPrice: 350,
       imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
       description:
          'An amazing classsic wireless headphone with deep bass. Available in four colors',
    },
    {
-      id: '3',
-      name: 'Shuer wired headset -SE5219',
-      price: '455',
+      id: '5',
+      name: 'UISIi HM13 Gaming headphone',
+      price: 550,
+      discountedPrice: 335,
       imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
       description:
          'An amazing classsic wireless headphone with deep bass. Available in four colors',
    },
    {
-      id: '3',
-      name: 'Shuer wired headset -SE5219',
-      price: '455',
+      id: '6',
+      name: 'JBL 881A',
+      price: 1100,
+      discountedPrice: 750,
       imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
       description:
          'An amazing classsic wireless headphone with deep bass. Available in four colors',
    },
-];
+]; */
 
 const Products = () => {
+   const [headphones, setHeadphones] = useState([]);
+   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+      axiosInstance
+         .get('/headphones')
+         .then(({ data }) => {
+            console.log(data);
+            setHeadphones(data);
+            setLoading(false);
+         })
+         .catch((err) => console.log(err.message));
+   }, []);
+
    return (
       <Box component='section' sx={{}}>
          <Container>
@@ -82,55 +99,13 @@ const Products = () => {
             </Box>
             <Box>
                <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                  {products.map((product) => (
-                     <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        md={3}
-                        key={product.id}
-                        sx={{ display: 'flex', justifyContent: 'center' }}
-                     >
-                        <Card sx={{ maxWidth: 276 }}>
-                           <CardMedia
-                              component='img'
-                              alt='green iguana'
-                              height='270'
-                              image={product.imageUrl}
-                           />
-                           <CardContent>
-                              <Typography
-                                 gutterBottom
-                                 variant='body1'
-                                 component='div'
-                              >
-                                 {product?.name.slice(0, 23)}
-                              </Typography>
-                              <Typography
-                                 gutterBottom
-                                 variant='body1'
-                                 component='div'
-                              >
-                                 <span
-                                    style={{
-                                       color: 'gray',
-                                       textDecoration: 'line-through',
-                                    }}
-                                 >
-                                    Tk{product.price * 1.4}
-                                 </span>{' '}
-                                 &nbsp; Tk{product?.price}
-                              </Typography>
-                              <Typography
-                                 variant='body2'
-                                 color='text.secondary'
-                              >
-                                 {product.description.slice(0, 50)}
-                              </Typography>
-                           </CardContent>
-                        </Card>
-                     </Grid>
-                  ))}
+                  {loading ? (
+                     <Spinner />
+                  ) : (
+                     headphones.map((headphone) => (
+                        <Product key={headphone._id} {...headphone} />
+                     ))
+                  )}
                </Grid>
             </Box>
          </Container>
