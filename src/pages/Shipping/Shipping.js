@@ -35,7 +35,7 @@ const Shipping = () => {
       try {
          const { data } = await axiosInstance.post('/orders', order);
          if (data.orderId) {
-             toast.success('order is');
+
              
             const response = await Swal.fire({
                title: 'Thanks for your Order',
@@ -131,7 +131,8 @@ const Shipping = () => {
                            px: 1,
                            py: 5,
                            maxWidth: '30rem',
-                           textAlign: 'center'
+                           textAlign: 'center',
+                           boxShadow: 1
                         }}
                      >
                         <Typography variant='h5' align='center' sx={{ mb: 2 }}>

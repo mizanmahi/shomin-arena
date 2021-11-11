@@ -44,25 +44,22 @@ const Header = () => {
                   </Link>
                   {user ? (
                      <>
-                        <Link to='/myOrders' style={{ textDecoration: 'none' }}>
-                           <Button sx={{ color: '#ffffff' }}>My Orders</Button>
-                        </Link>
                         <Link
                            to='/dashboard'
                            style={{ textDecoration: 'none' }}
                         >
                            <Button sx={{ color: '#ffffff' }}>Dashboard</Button>
                         </Link>
-                        <Link to='/pay' style={{ textDecoration: 'none' }}>
-                           <Button sx={{ color: '#ffffff' }}>Pay</Button>
-                        </Link>
-                        <Link to='/review' style={{ textDecoration: 'none' }}>
-                           <Button sx={{ color: '#ffffff' }}>review</Button>
-                        </Link>
+
                         <Typography
                            variant='body1'
                            component='a'
-                           sx={{ color: '#ff7004', px: 1, py: 1,  textTransform: 'capitalize' }}
+                           sx={{
+                              color: '#ff7004',
+                              px: 1,
+                              py: 1,
+                              textTransform: 'capitalize',
+                           }}
                         >
                            {user.displayName}
                         </Typography>

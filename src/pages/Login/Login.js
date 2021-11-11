@@ -86,6 +86,7 @@ const Login = () => {
                         px: 1,
                         py: 8,
                         maxWidth: '30rem',
+                        textAlign: 'center',
                      }}
                   >
                      <Typography variant='h5' align='center'>
