@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Paper, Rating, Typography } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
 import { Box } from '@mui/system';
 
 const Review = ({ name, company, description, rating, createdAt }) => {

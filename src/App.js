@@ -7,6 +7,7 @@ import AuthContextProvider from './context/AuthContextProvider';
 import Register from './pages/Register/Register';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Explore from './pages/Explore/Explore';
 
 function App() {
    return (
@@ -19,6 +20,9 @@ function App() {
                   </Route>
                   <Route exact path='/'>
                      <Home />
+                  </Route>
+                  <Route exact path='/headphones'>
+                     <Explore />
                   </Route>
                   <ProtectedRoute exact path='/shipping/:id'>
                      <Shipping />

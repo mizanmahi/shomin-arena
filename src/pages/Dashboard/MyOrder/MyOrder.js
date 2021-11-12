@@ -1,4 +1,4 @@
-import { Chip, Container, Typography } from '@mui/material';
+import { Chip, Container} from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -95,10 +95,17 @@ const MyOrder = () => {
                               {orderItem.price} tk
                            </TableCell>
                            <TableCell align='center'>
-                              <Chip
-                                 label={status}
-                                 sx={{ bgcolor: '#f14b4b', color: '#ffffff' }}
-                              />
+                           <Chip
+                                       label={status}
+                                       sx={{
+                                          bgcolor: `${
+                                             status === 'shipped'
+                                                ? 'green'
+                                                : '#f14b4b'
+                                          }`,
+                                          color: '#ffffff',
+                                       }}
+                                    />
                            </TableCell>
                            <TableCell
                               align='center'

@@ -203,21 +203,35 @@ const Dashboard = (props) => {
                   },
                }}
             >
+             <Link to='/' style={{ textDecoration: 'none' }}>
+                  <Typography
+                     variant='h6'
+                     sx={{
+                        fontWeight: 'bold',
+                        color: '#ffffff',
+                        bgcolor: '#2f333a',
+                        textAlign: 'center',
+                        pt: 2,
+                     }}
+                  >
+                     SHOMIN ARENA
+                  </Typography>
+               </Link>
                <Box
                   sx={{
-                     bgcolor: '#ff7004',
+                     bgcolor: '#2f333a',
                      color: '#fff',
                      display: 'flex',
                      height: '100vh',
                      flexDirection: 'column',
                      justifyContent: 'space-between',
                      alignItems: 'center',
-                     pt: 8,
+                     pt: 3,
                   }}
                >
                   {drawer}{' '}
                   <Box sx={{ mb: 2 }}>
-                     <Button sx={{ color: '#fff' }}>
+                     <Button sx={{ color: '#fff' }} onClick={logoutUser}>
                         Sign out <LogoutIcon sx={{ ml: 2 }} />{' '}
                      </Button>
                   </Box>{' '}

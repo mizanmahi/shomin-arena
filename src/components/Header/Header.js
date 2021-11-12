@@ -6,11 +6,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
    const theme = useTheme();
    const matches = useMediaQuery(theme?.breakpoints.down('md'));
-
    const { user, logoutUser } = useAuth();
 
    const handleLogout = () => {
@@ -29,56 +29,65 @@ const Header = () => {
                   minHeight: '5rem',
                }}
             >
-               <Link to='/' style={{ textDecoration: 'none'}}>
-               <Typography variant='h6' sx={{ fontWeight: 'bold', color: '#ffffff' }}>
-                  SHOMIN ARENA
-               </Typography>
+               <Link to='/' style={{ textDecoration: 'none' }}>
+                  <Typography
+                     variant='h6'
+                     sx={{ fontWeight: 'bold', color: '#ffffff' }}
+                  >
+                     SHOMIN ARENA
+                  </Typography>
                </Link>
-               <nav
-                  sx={{
-                     display: 'flex',
-                     justifyContent: 'center',
-                     alignItems: 'center',
-                  }}
-               >
-                  <Link to='/headphones' style={{ textDecoration: 'none' }}>
-                     <Button sx={{ color: '#ffffff' }}>Explore</Button>
-                  </Link>
-                  {user ? (
-                     <>
-                        <Link
-                           to='/dashboard'
-                           style={{ textDecoration: 'none' }}
-                        >
-                           <Button sx={{ color: '#ffffff' }}>Dashboard</Button>
-                        </Link>
-
-                        <Typography
-                           variant='body1'
-                           component='a'
-                           sx={{
-                              color: '#ff7004',
-                              px: 1,
-                              py: 1,
-                              textTransform: 'capitalize',
-                           }}
-                        >
-                           {user.displayName}
-                        </Typography>
-
-                        <Button
-                           sx={{ color: '#ffffff' }}
-                           onClick={handleLogout}
-                        >
-                           <LogoutIcon />
-                        </Button>
-                     </>
-                  ) : (
-                     <Link to='/signin' style={{ textDecoration: 'none' }}>
-                        <Button sx={{ color: '#ffffff' }}>Sign in</Button>
+               {matches ? (
+                  <MenuIcon />
+               ) : (
+                  <nav
+                     sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                     }}
+                  >
+                     <Link to='/headphones' style={{ textDecoration: 'none' }}>
+                        <Button sx={{ color: '#ffffff' }}>Explore</Button>
                      </Link>
-                  )}
-               </nav>
+                     {user ? (
+                        <>
+                           <Link
+                              to='/dashboard'
+                              style={{ textDecoration: 'none' }}
+                           >
+                              <Button sx={{ color: '#ffffff' }}>
+                                 Dashboard
+                              </Button>
+                           </Link>
+
+                           <Typography
+                              variant='body1'
+                              component='a'
+                              sx={{
+                                 color: '#ff7004',
+                                 px: 1,
+                                 py: 1,
+                                 textTransform: 'capitalize',
+                              }}
+                           >
+                              {user.displayName}
+                           </Typography>
+
+                           <Button
+                              sx={{ color: '#ffffff' }}
+                              onClick={handleLogout}
+                           >
+                              <LogoutIcon />
+                           </Button>
+                        </>
+                     ) : (
+                        <Link to='/signin' style={{ textDecoration: 'none' }}>
+                           <Button sx={{ color: '#ffffff' }}>Sign in</Button>
+                        </Link>
+                     )}
+                  </nav>
+               )}
             </Box>
          </Container>
 
@@ -86,7 +95,7 @@ const Header = () => {
          <Drawer
             anchor='left'
             open={matches}
-            //    onClose={() => setOpenDrawer(false)}
+            // onClose={() => setOpenDrawer(false)}
          >
             <Box
                sx={{

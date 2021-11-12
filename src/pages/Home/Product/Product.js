@@ -50,7 +50,7 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
             />
             <CardContent>
                <Typography gutterBottom variant='body1' component='div'>
-                  {name.slice(0, 23)}
+                  {name?.slice(0, 23)}
                </Typography>
                <Typography gutterBottom variant='body1' component='div'>
                   <span
@@ -84,7 +84,7 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
                   Buy Now
                </Button>
                <Typography variant='body2' color='text.secondary'>
-                  {description.slice(0, 50)}
+                  {description?.slice(0, 50)}
                </Typography>
             </CardContent>
          </Card>

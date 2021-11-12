@@ -102,7 +102,7 @@ const Products = () => {
                   {loading ? (
                      <Spinner />
                   ) : (
-                     headphones.map((headphone) => (
+                     headphones.slice(0,6).map((headphone) => (
                         <Product key={headphone._id} {...headphone} />
                      ))
                   )}
