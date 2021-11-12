@@ -12,6 +12,7 @@ import {
 } from 'firebase/auth';
 import initializeFirebase from '../firebase/firebase.config';
 import { saveUserInfo } from '../helpers/saveUserInfo';
+import { axiAuth, axiosInstance } from '../helpers/axiosInstance';
 
 //? initializing firebase app
 initializeFirebase();
@@ -20,6 +21,8 @@ const useFirebase = () => {
     const [user, setUser] = useState(null);
     const [userLoading, setUserLoading] = useState(true);
     const [authError, setAuthError] = useState('');
+   const [admin, setAdmin] = useState(false);
+
     
     const auth = getAuth()
 
@@ -48,6 +51,7 @@ const useFirebase = () => {
 
       } catch (error) {
          setAuthError(error.message);
+         console.log(error.message);
       } finally {
          setUserLoading(false);
       }
@@ -70,6 +74,7 @@ const useFirebase = () => {
             : history.push('/');
       } catch (error) {
          setAuthError(error.message);
+         console.log(error.message);
       } finally {
          setUserLoading(false);
       }
@@ -110,10 +115,24 @@ const useFirebase = () => {
     return () => unSubscribe;
  }, [auth]);
 
+ useEffect(() => {
+   if (user) {
+      setUserLoading(true)
+      axiAuth.get(`/users/${user?.email}`).then(({ data }) => {
+         console.log(data);
+         setAdmin(data?.role ? data.role === 'admin' : false);
+         setUserLoading(false)
+      });
+   }
+}, [user]);
+
+console.log(admin);
+
 
 
    return {
       user,
+      admin,
       userLoading,
       authError,
       registerWithEmailAndPassword,

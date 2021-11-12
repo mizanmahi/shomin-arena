@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper, Rating, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { Box } from '@mui/system';
 
@@ -37,7 +37,7 @@ const Review = ({ name, company, description, rating, createdAt }) => {
                      fontSize: '1.2rem',
                   }}
                >
-                  {rating} <StarIcon />
+                  <Rating name="read-only" value={rating} readOnly />
                </Typography>
             </Box>
          </Paper>

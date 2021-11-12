@@ -4,6 +4,7 @@ import { Box } from '@mui/system';
 import StarIcon from '@mui/icons-material/Star';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import Review from '../Review/Review';
+import Spinner from '../../../components/Spinner/Spinner';
 
 const Reviews = () => {
    const [reviews, setReviews] = useState([]);
@@ -35,7 +36,7 @@ const Reviews = () => {
             </Box>
             <Box>
                <Grid container spacing={3}>
-                  {reviews.map((review) => (
+                  {reviews.length === 0 ? <Spinner /> : reviews.map((review) => (
                      <Review key={review._id} {...review} />
                   ))}
                </Grid>

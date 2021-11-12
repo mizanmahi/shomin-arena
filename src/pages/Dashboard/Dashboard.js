@@ -1,9 +1,7 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -16,12 +14,27 @@ import Typography from '@mui/material/Typography';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ReviewsIcon from '@mui/icons-material/Reviews';
-import { Route, useHistory, useRouteMatch, Switch } from 'react-router';
+import {
+   Route,
+   useHistory,
+   useRouteMatch,
+   Switch,
+   Link,
+} from 'react-router-dom';
 import MyOrder from './MyOrder/MyOrder';
 import { Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Review from './Review/Review';
 import { useAuth } from '../../hooks/useAuth';
+import ManageAllOrders from './ManageAllOrders/ManageAllOrders';
+import AddProduct from './AddProduct/AddProduct';
+import ManageProducts from './ManageProducts/ManageProducts';
+import MakeAdmin from './MakeAdmin/MakeAdmin';
+import AddIcon from '@mui/icons-material/Add';
+import BallotIcon from '@mui/icons-material/Ballot';
+import BorderAllIcon from '@mui/icons-material/BorderAll';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AdminRoute from '../../components/AdminRoute/AdminRoute';
 
 const drawerWidth = 240;
 
@@ -31,7 +44,7 @@ const Dashboard = (props) => {
 
    let { path, url } = useRouteMatch();
    const history = useHistory();
-   const { user, logoutUser } = useAuth();
+   const { user, logoutUser, admin } = useAuth();
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -64,30 +77,30 @@ const Dashboard = (props) => {
    const adminMenu = [
       {
          menu: 'Manage All Orders',
-         icon: ShoppingBasketIcon,
+         icon: BallotIcon,
          onClick: () => {
             history.push(`${url}`);
          },
       },
       {
          menu: 'Add a product',
-         icon: CreditCardIcon,
+         icon: AddIcon,
          onClick: () => {
-            history.push(`${url}/pay`);
+            history.push(`${url}/addProducts`);
          },
       },
       {
          menu: 'Manage products',
-         icon: ReviewsIcon,
+         icon: BorderAllIcon,
          onClick: () => {
-            history.push(`${url}/review`);
+            history.push(`${url}/manageProducts`);
          },
       },
       {
          menu: 'Make admin',
-         icon: ReviewsIcon,
+         icon: AdminPanelSettingsIcon,
          onClick: () => {
-            history.push(`${url}/review`);
+            history.push(`${url}/makeAdmin`);
          },
       },
    ];
@@ -95,14 +108,23 @@ const Dashboard = (props) => {
    const drawer = (
       <Box sx={{}}>
          <List>
-            {userMenu.map((menu, index) => (
-               <ListItem button key={index} onClick={menu?.onClick}>
-                  <ListItemIcon>
-                     <menu.icon sx={{ color: '#ffffff' }} />
-                  </ListItemIcon>
-                  <ListItemText primary={menu.menu} />
-               </ListItem>
-            ))}
+            {admin
+               ? adminMenu.map((menu, index) => (
+                    <ListItem button key={index} onClick={menu?.onClick}>
+                       <ListItemIcon>
+                          <menu.icon sx={{ color: '#ffffff' }} />
+                       </ListItemIcon>
+                       <ListItemText primary={menu.menu} />
+                    </ListItem>
+                 ))
+               : userMenu.map((menu, index) => (
+                    <ListItem button key={index} onClick={menu?.onClick}>
+                       <ListItemIcon>
+                          <menu.icon sx={{ color: '#ffffff' }} />
+                       </ListItemIcon>
+                       <ListItemText primary={menu.menu} />
+                    </ListItem>
+                 ))}
          </List>
       </Box>
    );
@@ -216,16 +238,30 @@ const Dashboard = (props) => {
                }}
                open
             >
+               <Link to='/' style={{ textDecoration: 'none' }}>
+                  <Typography
+                     variant='h6'
+                     sx={{
+                        fontWeight: 'bold',
+                        color: '#ffffff',
+                        bgcolor: '#2f333a',
+                        textAlign: 'center',
+                        pt: 2,
+                     }}
+                  >
+                     SHOMIN ARENA
+                  </Typography>
+               </Link>
                <Box
                   sx={{
-                     bgcolor: '#ff7004',
+                     bgcolor: '#2f333a',
                      color: '#fff',
                      display: 'flex',
                      height: '100vh',
                      flexDirection: 'column',
                      justifyContent: 'space-between',
                      alignItems: 'center',
-                     pt: 8,
+                     pt: 3,
                   }}
                >
                   {drawer}{' '}
@@ -249,7 +285,7 @@ const Dashboard = (props) => {
             <Box>
                <Switch>
                   <Route exact path={path}>
-                     <MyOrder />
+                     {admin ? <ManageAllOrders /> : <MyOrder />}
                   </Route>
                   <Route path={`${path}/pay`}>
                      <h2>Pay</h2>
@@ -257,6 +293,18 @@ const Dashboard = (props) => {
                   <Route path={`${path}/review`}>
                      <Review />
                   </Route>
+                  <AdminRoute path={`${path}/manageAllOrders`}>
+                     {admin ? <ManageAllOrders /> : <MyOrder />}
+                  </AdminRoute>
+                  <AdminRoute path={`${path}/addProducts`}>
+                     <AddProduct />
+                  </AdminRoute>
+                  <AdminRoute path={`${path}/manageProducts`}>
+                     <ManageProducts />
+                  </AdminRoute>
+                  <AdminRoute path={`${path}/makeAdmin`}>
+                     <MakeAdmin />
+                  </AdminRoute>
                </Switch>
             </Box>
          </Box>

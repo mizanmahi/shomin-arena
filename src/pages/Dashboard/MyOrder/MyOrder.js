@@ -12,28 +12,18 @@ import { axiosInstance } from '../../../helpers/axiosInstance';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
-
-function createData(name, calories, fat, carbs, protein) {
-   return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-   createData('Eclair', 262, 16.0, 24, 6.0),
-   createData('Cupcake', 305, 3.7, 67, 4.3),
-   createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+import { useAuth } from '../../../hooks/useAuth';
 
 const MyOrder = () => {
    const [orders, setOrders] = useState([]);
+   const { user } = useAuth();
 
    useEffect(() => {
-      axiosInstance.get('/orders').then(({ data }) => {
+      axiosInstance.get(`/myOrders/?email=${user?.email}`).then(({ data }) => {
          setOrders(data);
          console.log(data);
       });
-   }, []);
+   }, [user.email]);
 
    const deleteHandler = async (id) => {
       const response = await Swal.fire({
@@ -49,12 +39,12 @@ const MyOrder = () => {
          width: '25rem',
          height: '10rem',
       });
-      if(response.isConfirmed){
+      if (response.isConfirmed) {
          const { data } = await axiosInstance.delete(`/orders/${id}`);
          if (data.deletedId) {
             setOrders((prev) => prev.filter((order) => order._id !== id));
             toast.warning(data?.message, {
-               className: 'Toastify_theme'
+               className: 'Toastify_theme',
             });
          }
       }
@@ -83,7 +73,7 @@ const MyOrder = () => {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {orders.map(({ _id, orderItem, status }) => (
+                     {orders?.map(({ _id, orderItem, status }) => (
                         <TableRow
                            key={_id}
                            sx={{
@@ -105,7 +95,10 @@ const MyOrder = () => {
                               {orderItem.price} tk
                            </TableCell>
                            <TableCell align='center'>
-                              <Chip label={status} sx={{bgcolor: '#f14b4b', color: '#ffffff'}} />
+                              <Chip
+                                 label={status}
+                                 sx={{ bgcolor: '#f14b4b', color: '#ffffff' }}
+                              />
                            </TableCell>
                            <TableCell
                               align='center'

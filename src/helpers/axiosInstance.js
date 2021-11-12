@@ -13,6 +13,6 @@ export const axiosInstance = axios.create({
 
 //@ axios instance with auth token
 export const axiAuth = axios.create({
-   baseURL: 'https://doc-portals-server.herokuapp.com/',
+   baseURL: 'http://localhost:5000',
    headers,
 });
