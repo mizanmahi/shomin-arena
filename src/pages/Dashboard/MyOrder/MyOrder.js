@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { toast, ToastContainer } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 function createData(name, calories, fat, carbs, protein) {
    return { name, calories, fat, carbs, protein };
@@ -35,10 +36,27 @@ const MyOrder = () => {
    }, []);
 
    const deleteHandler = async (id) => {
-      const { data } = await axiosInstance.delete(`/orders/${id}`);
-      if (data.deletedId) {
-         setOrders((prev) => prev.filter((order) => order._id !== id));
-         toast.warning(data?.message);
+      const response = await Swal.fire({
+         title: 'Cancelling Order',
+         text: `Are you sure you want to cancel?`,
+         icon: 'warning',
+         confirmButtonText: 'Yes',
+         confirmButtonColor: '#c70000',
+         showCancelButton: true,
+         cancelButtonText: 'No',
+         cancelButtonColor: '#ff7004',
+         background: '#ffffff',
+         width: '25rem',
+         height: '10rem',
+      });
+      if(response.isConfirmed){
+         const { data } = await axiosInstance.delete(`/orders/${id}`);
+         if (data.deletedId) {
+            setOrders((prev) => prev.filter((order) => order._id !== id));
+            toast.warning(data?.message, {
+               className: 'Toastify_theme'
+            });
+         }
       }
    };
 
@@ -84,10 +102,10 @@ const MyOrder = () => {
                               {orderItem?.name}
                            </TableCell>
                            <TableCell align='center'>
-                              {orderItem.price}
+                              {orderItem.price} tk
                            </TableCell>
                            <TableCell align='center'>
-                              <Chip label={status} />
+                              <Chip label={status} sx={{bgcolor: '#f14b4b', color: '#ffffff'}} />
                            </TableCell>
                            <TableCell
                               align='center'

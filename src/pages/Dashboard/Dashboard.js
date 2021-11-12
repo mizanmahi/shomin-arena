@@ -20,7 +20,8 @@ import { Route, useHistory, useRouteMatch, Switch } from 'react-router';
 import MyOrder from './MyOrder/MyOrder';
 import { Button } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import Review from './Review/Review';
+import { useAuth } from '../../hooks/useAuth';
 
 const drawerWidth = 240;
 
@@ -30,6 +31,7 @@ const Dashboard = (props) => {
 
    let { path, url } = useRouteMatch();
    const history = useHistory();
+   const { user, logoutUser } = useAuth();
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -52,6 +54,37 @@ const Dashboard = (props) => {
       },
       {
          menu: 'Review',
+         icon: ReviewsIcon,
+         onClick: () => {
+            history.push(`${url}/review`);
+         },
+      },
+   ];
+
+   const adminMenu = [
+      {
+         menu: 'Manage All Orders',
+         icon: ShoppingBasketIcon,
+         onClick: () => {
+            history.push(`${url}`);
+         },
+      },
+      {
+         menu: 'Add a product',
+         icon: CreditCardIcon,
+         onClick: () => {
+            history.push(`${url}/pay`);
+         },
+      },
+      {
+         menu: 'Manage products',
+         icon: ReviewsIcon,
+         onClick: () => {
+            history.push(`${url}/review`);
+         },
+      },
+      {
+         menu: 'Make admin',
          icon: ReviewsIcon,
          onClick: () => {
             history.push(`${url}/review`);
@@ -85,9 +118,11 @@ const Dashboard = (props) => {
             sx={{
                width: { sm: `calc(100% - ${drawerWidth}px)` },
                ml: { sm: `${drawerWidth}px` },
+               bgcolor: '#f4f5f8',
+               boxShadow: 0,
             }}
          >
-            <Toolbar sx={{bgcolor: '#2f333a'}}>
+            <Toolbar>
                <IconButton
                   color='inherit'
                   aria-label='open drawer'
@@ -95,11 +130,33 @@ const Dashboard = (props) => {
                   onClick={handleDrawerToggle}
                   sx={{ mr: 2, display: { sm: 'none' } }}
                >
-                  <MenuIcon />
+                  <MenuIcon sx={{ color: '#000' }} />
                </IconButton>
-               <Typography variant='h6' noWrap component='div'>
-                  Dashboard
-               </Typography>
+               <Box
+                  sx={{
+                     display: 'flex',
+                     justifyContent: 'space-between',
+                     alignItems: 'center',
+                     width: 1,
+                  }}
+               >
+                  <Typography
+                     variant='h6'
+                     noWrap
+                     component='div'
+                     sx={{ color: '#2f333a' }}
+                  >
+                     Dashboard
+                  </Typography>
+                  <Typography
+                     variant='h6'
+                     noWrap
+                     component='div'
+                     sx={{ color: '#2f333a' }}
+                  >
+                     {user?.displayName}
+                  </Typography>
+               </Box>
             </Toolbar>
          </AppBar>
          <Box
@@ -124,7 +181,7 @@ const Dashboard = (props) => {
                   },
                }}
             >
-                <Box
+               <Box
                   sx={{
                      bgcolor: '#ff7004',
                      color: '#fff',
@@ -133,12 +190,14 @@ const Dashboard = (props) => {
                      flexDirection: 'column',
                      justifyContent: 'space-between',
                      alignItems: 'center',
-                     pt: 8
+                     pt: 8,
                   }}
                >
                   {drawer}{' '}
-                  <Box sx={{mb: 2}}>
-                     <Button sx={{color: '#fff'}}>Sign out <LogoutIcon sx={{ml: 2}} /> </Button>
+                  <Box sx={{ mb: 2 }}>
+                     <Button sx={{ color: '#fff' }}>
+                        Sign out <LogoutIcon sx={{ ml: 2 }} />{' '}
+                     </Button>
                   </Box>{' '}
                </Box>
             </Drawer>
@@ -153,7 +212,7 @@ const Dashboard = (props) => {
                      boxSizing: 'border-box',
                      width: drawerWidth,
                   },
-                  border: 0
+                  border: 0,
                }}
                open
             >
@@ -166,12 +225,14 @@ const Dashboard = (props) => {
                      flexDirection: 'column',
                      justifyContent: 'space-between',
                      alignItems: 'center',
-                     pt: 8
+                     pt: 8,
                   }}
                >
                   {drawer}{' '}
-                  <Box sx={{mb: 2}}>
-                     <Button sx={{color: '#fff'}}>Sign out <LogoutIcon sx={{ml: 2}} /> </Button>
+                  <Box sx={{ mb: 2 }}>
+                     <Button sx={{ color: '#fff' }} onClick={logoutUser}>
+                        Sign out <LogoutIcon sx={{ ml: 2 }} />{' '}
+                     </Button>
                   </Box>{' '}
                </Box>
             </Drawer>
@@ -194,7 +255,7 @@ const Dashboard = (props) => {
                      <h2>Pay</h2>
                   </Route>
                   <Route path={`${path}/review`}>
-                     <h2>Review</h2>
+                     <Review />
                   </Route>
                </Switch>
             </Box>

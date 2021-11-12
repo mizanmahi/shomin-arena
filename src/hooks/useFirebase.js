@@ -11,6 +11,7 @@ import {
    getIdToken,
 } from 'firebase/auth';
 import initializeFirebase from '../firebase/firebase.config';
+import { saveUserInfo } from '../helpers/saveUserInfo';
 
 //? initializing firebase app
 initializeFirebase();
@@ -40,7 +41,7 @@ const useFirebase = () => {
             displayName: userName,
          });
 
-        //  saveUserInfo(userName, email, 'POST');
+         saveUserInfo(userName, email, 'POST');
 
          // redirect to home page
          history.push('/');

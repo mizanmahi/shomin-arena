@@ -29,9 +29,11 @@ const Header = () => {
                   minHeight: '5rem',
                }}
             >
-               <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+               <Link to='/' style={{ textDecoration: 'none'}}>
+               <Typography variant='h6' sx={{ fontWeight: 'bold', color: '#ffffff' }}>
                   SHOMIN ARENA
                </Typography>
+               </Link>
                <nav
                   sx={{
                      display: 'flex',

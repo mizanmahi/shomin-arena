@@ -50,10 +50,9 @@ const Shipping = () => {
                width: '25rem',
             });
 
-
             reset();
             if (response.isConfirmed) {
-               history.push('/myOrders');
+               history.push('/dashboard');
             } else {
                history.push('/explore');
             }
@@ -193,7 +192,7 @@ const Shipping = () => {
                            variant='contained'
                            sx={{ background: '#ff7004', width: '60%', mt: 3 }}
                         >
-                           Sign In
+                           Place Order
                         </Button>
                      </Box>
                   </Grid>

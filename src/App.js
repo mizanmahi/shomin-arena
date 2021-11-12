@@ -29,9 +29,9 @@ function App() {
                   <Route exact path='/register'>
                      <Register />
                   </Route>
-                  <Route  path='/dashboard'>
+                  <ProtectedRoute  path='/dashboard'>
                      <Dashboard />
-                  </Route>
+                  </ProtectedRoute>
                </Switch>
             </Router>
          </div>
