@@ -1,6 +1,7 @@
 import { Button, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import bannerImage from '../../../images/bannerImage.jpg';
 
 const Banner = () => {
@@ -25,9 +26,9 @@ const Banner = () => {
                         Classic Deep Bass
                      </Typography>
                      <Typography variant='body2' sx={{}} gutterBottom>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Ea blanditiis est, sapiente repudiandae eligendi quo!
+                        Shuer se-522 is a classic designed headphone with deep bass. Build quality is worth the price. Purchase it now before the price goes up.
                      </Typography>
+                     <Link to='/headphones' style={{textDecoration: 'none'}}>
                      <Button
                         variant='contained'
                         color='primary'
@@ -41,6 +42,7 @@ const Banner = () => {
                      >
                         Shop Now
                      </Button>
+                     </Link>
                   </Box>
                </Grid>
                <Grid item md={6}>

@@ -1,6 +1,7 @@
 import {
    Breadcrumbs,
    Button,
+   CircularProgress,
    Container,
    Grid,
    TextField,
@@ -11,6 +12,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
    const {
@@ -22,10 +24,15 @@ const Login = () => {
 
    const history = useHistory();
    const location = useLocation();
-   const { loginWithEmailAndPassword, authError } = useAuth();
+   const { loginWithEmailAndPassword, authError, userLoading } = useAuth();
 
    const handleLogin = async ({ email, password }) => {
-      await loginWithEmailAndPassword(email, password, location, history);
+      loginWithEmailAndPassword(email, password, location, history);
+
+      if (authError) {
+         toast.error(authError);
+      }
+
       reset();
    };
 
@@ -45,7 +52,7 @@ const Login = () => {
          <Box sx={registerHeaderStyles}>
             <Container>
                <Box>
-                  <Typography variant='h5' sx={{ mb: 2 }}>
+                  <Typography variant='h5' sx={{ mb: 2, color: '#2f333a' }}>
                      CREATE ACCOUNT
                   </Typography>
                   <Breadcrumbs
@@ -122,13 +129,30 @@ const Login = () => {
                         variant='contained'
                         sx={{ background: '#ff7004', width: '60%', mt: 3 }}
                      >
-                        Sign In
+                        {userLoading ? (
+                           <CircularProgress color='common' size='1.5rem' />
+                        ) : (
+                           'Sign in'
+                        )}
                      </Button>
-                     <Typography sx={{mt: 1}}>Need an account? <Link to='register'>Register</Link></Typography>
+                     <Typography sx={{ mt: 1 }}>
+                        Need an account? <Link to='register'>Register</Link>
+                     </Typography>
                   </Box>
                </Grid>
             </Grid>
          </Container>
+         <ToastContainer
+            position='top-left'
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+         />
       </Box>
    );
 };

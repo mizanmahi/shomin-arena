@@ -1,6 +1,4 @@
 import {
-   Button,
-   Chip,
    Container,
    Table,
    TableBody,
@@ -17,7 +15,6 @@ import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
 import Paper from '@mui/material/Paper';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import Spinner from '../../../components/Spinner/Spinner';
 
 const ManageProducts = () => {
    const [headphones, setHeadphones] = useState([]);
@@ -86,7 +83,7 @@ const ManageProducts = () => {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {loading ? <Spinner /> : headphones?.map(
+                     {headphones?.map(
                         ({
                            _id,
                            imageUrl,
@@ -139,7 +136,7 @@ const ManageProducts = () => {
          </Container>
          <ToastContainer
             position='top-left'
-            autoClose={1000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick

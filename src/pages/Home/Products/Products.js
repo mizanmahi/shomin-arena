@@ -93,8 +93,7 @@ const Products = () => {
                   variant='body2'
                   sx={{ maxWidth: '22rem', mx: 'auto', color: '#474747' }}
                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-                  quia necessitatibus.
+                  Our latest cool headphones of the week
                </Typography>
             </Box>
             <Box>

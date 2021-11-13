@@ -1,6 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,10 +14,13 @@ const AddProduct = () => {
       formState: { errors },
    } = useForm();
 
+   console.log(errors);
+
    const { user } = useAuth();
 
    const handleAdd = async (formData) => {
       console.log(formData);
+      
       const { data } = await axiosInstance.post('/headphones', {
          ...formData,
          createdAt: new Date().toLocaleDateString(),
@@ -28,6 +31,8 @@ const AddProduct = () => {
          reset();
       }
    };
+   
+   
 
    return (
       <Box
@@ -38,11 +43,12 @@ const AddProduct = () => {
             component='form'
             onSubmit={handleSubmit(handleAdd)}
             sx={{
-               bgcolor: '#f4f5f8',
+               bgcolor: '#ffffff',
                px: 1,
                py: 8,
                maxWidth: '30rem',
                textAlign: 'center',
+               borderRadius: 2
             }}
          >
             <Typography variant='h5' align='center'>
@@ -77,11 +83,12 @@ const AddProduct = () => {
                required
             />
             <TextField
-               {...register('description')}
+               {...register('description', {minLength: {value: 100, message: 'Description must be 100 characters long'}})}
                variant='standard'
                sx={{ width: '80%', mb: 2 }}
                label='Description'
                type='text'
+               helperText='Must be minimum 100 characters long'
                multiline
                maxRows={4}
                required

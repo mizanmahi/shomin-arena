@@ -12,7 +12,6 @@ const Review = () => {
       register,
       handleSubmit,
       reset,
-      formState: { errors },
    } = useForm();
 
    const { user, userLoading } = useAuth();

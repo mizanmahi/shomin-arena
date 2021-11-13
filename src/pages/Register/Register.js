@@ -1,6 +1,7 @@
 import {
    Breadcrumbs,
    Button,
+   CircularProgress,
    Container,
    Grid,
    TextField,
@@ -10,6 +11,7 @@ import { Box } from '@mui/system';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 
 const Register = () => {
@@ -21,7 +23,8 @@ const Register = () => {
    } = useForm();
 
    const history = useHistory();
-   const { registerWithEmailAndPassword } = useAuth();
+   const { registerWithEmailAndPassword, userLoading } = useAuth();
+   
 
    const handleRegister = async ({
       userName,
@@ -31,6 +34,11 @@ const Register = () => {
    }) => {
       console.log({ userName, email, password, confirmPassword });
 
+      if(password !== confirmPassword) {
+         toast.error('Passwords do not match');
+         return;
+      }
+
       try {
          await registerWithEmailAndPassword(userName, email, password, history);
       } catch (error) {
@@ -39,6 +47,8 @@ const Register = () => {
 
       reset();
    };
+
+   console.log(errors);
 
    // styles --------------------------------
    const registerHeaderStyles = {
@@ -56,7 +66,7 @@ const Register = () => {
          <Box sx={registerHeaderStyles}>
             <Container>
                <Box>
-                  <Typography variant='h5' sx={{ mb: 2 }}>
+                  <Typography variant='h5' sx={{ mb: 2, color: '#2f333a' }}>
                      CREATE ACCOUNT
                   </Typography>
                   <Breadcrumbs
@@ -146,7 +156,7 @@ const Register = () => {
                         variant='contained'
                         sx={{ background: '#ff7004', width: '60%', mt: 3 }}
                      >
-                        Register
+                        {userLoading ?  <CircularProgress color='common' size='1.5rem' /> : 'Register'}
                      </Button>
                      <Typography sx={{ mt: 1 }}>
                         Have an account? <Link to='signin'>Sign In</Link>
@@ -155,6 +165,17 @@ const Register = () => {
                </Grid>
             </Grid>
          </Container>
+         <ToastContainer
+            position='top-left'
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+         />
       </Box>
    );
 };

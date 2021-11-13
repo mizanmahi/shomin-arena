@@ -59,7 +59,7 @@ const Dashboard = (props) => {
          },
       },
       {
-         menu: 'Pay',
+         menu: 'Payment',
          icon: CreditCardIcon,
          onClick: () => {
             history.push(`${url}/pay`);
@@ -302,7 +302,7 @@ const Dashboard = (props) => {
                      {admin ? <ManageAllOrders /> : <MyOrder />}
                   </Route>
                   <Route path={`${path}/pay`}>
-                     <h2>Pay</h2>
+                     <Typography sx={{textAlign: 'center', mt: 10, color: '#2f333a'}} variant='h4' >Payment is under construction 🏗</Typography>
                   </Route>
                   <Route path={`${path}/review`}>
                      <Review />

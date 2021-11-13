@@ -1,4 +1,4 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import {  Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -17,9 +17,7 @@ const Footer = () => {
                      About us
                   </Typography>
                   <Typography variant='body2'>
-                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                     Deleniti perspiciatis doloribus consequatur tempora quasi
-                     illum nostrum facilis officia laboriosam
+                     We are a team of designers and developers that create high quality React app for selling cool headphones.
                   </Typography>
                   <Box sx={{ mt: 3 }}>
                      <FacebookIcon sx={{ mr: 1, cursor: 'pointer' }} />

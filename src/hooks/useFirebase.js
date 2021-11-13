@@ -5,14 +5,12 @@ import {
    signInWithEmailAndPassword,
    onAuthStateChanged,
    signOut,
-   GoogleAuthProvider,
-   signInWithPopup,
    updateProfile,
    getIdToken,
 } from 'firebase/auth';
 import initializeFirebase from '../firebase/firebase.config';
 import { saveUserInfo } from '../helpers/saveUserInfo';
-import { axiAuth, axiosInstance } from '../helpers/axiosInstance';
+import { axiAuth } from '../helpers/axiosInstance';
 
 //? initializing firebase app
 initializeFirebase();

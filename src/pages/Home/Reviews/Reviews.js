@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Paper, Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import StarIcon from '@mui/icons-material/Star';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import Review from '../Review/Review';
 import Spinner from '../../../components/Spinner/Spinner';
@@ -30,8 +29,7 @@ const Reviews = () => {
                   variant='body2'
                   sx={{ maxWidth: '22rem', mx: 'auto', color: '#474747' }}
                >
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-                  quia necessitatibus.
+                 Our first priority is to make sure you are happy with your purchase
                </Typography>
             </Box>
             <Box>

@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header';
 import { axiosInstance } from '../../helpers/axiosInstance';
 import { useAuth } from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 const Shipping = () => {
    const { id } = useParams();
@@ -17,6 +17,7 @@ const Shipping = () => {
       reset,
       formState: { errors },
    } = useForm();
+   console.log(errors);
 
    const history = useHistory();
 

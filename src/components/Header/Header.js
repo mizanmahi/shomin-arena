@@ -1,6 +1,12 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Avatar, Button, Container, Drawer, Typography } from '@mui/material';
+import {
+   Button,
+   Chip,
+   Container,
+   Drawer,
+   Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -72,22 +78,12 @@ const Header = () => {
                               </Button>
                            </Link>
 
-                           <Typography
-                              variant='body1'
-                              component='a'
-                              sx={{
-                                 color: '#ff7004',
-                                 px: 1,
-                                 py: 1,
-                                 textTransform: 'capitalize',
-                              }}
-                           >
-                              {user.displayName}
-                           </Typography>
-                           <Avatar sx={{ bgcolor: '#ff7004' }}>
-                                 <PersonIcon />
-                              </Avatar>
-
+                           <Chip
+                              sx={{ ml: 1 }}
+                              color='error'
+                              icon={<PersonIcon />}
+                              label={user.displayName}
+                           />
                            <Button
                               sx={{ color: '#ffffff' }}
                               onClick={handleLogout}
@@ -137,27 +133,21 @@ const Header = () => {
                            to='/dashboard'
                            style={{ textDecoration: 'none' }}
                         >
-                           <Button sx={{ color: '#ffffff' }}>Dashboard</Button>
+                           <Button sx={{ color: '#ffffff', mb: 2 }}>Dashboard</Button>
                         </Link>
 
-                        <Typography
-                           variant='body1'
-                           component='a'
-                           sx={{
-                              color: '#ff7004',
-                              px: 1,
-                              py: 1,
-                              textTransform: 'capitalize',
-                           }}
-                        >
-                           {user.displayName}
-                        </Typography>
+                        <Chip
+                           sx={{ ml: 1, mb: 2 }}
+                           color='error'
+                           icon={<PersonIcon />}
+                           label={user.displayName}
+                        />
 
                         <Button
                            sx={{ color: '#ffffff' }}
                            onClick={handleLogout}
                         >
-                           <LogoutIcon />
+                           Signout <LogoutIcon sx={{ ml: 2 }} />
                         </Button>
                      </>
                   ) : (

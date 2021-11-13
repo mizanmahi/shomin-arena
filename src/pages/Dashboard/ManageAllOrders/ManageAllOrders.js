@@ -1,4 +1,4 @@
-import { Button, Chip, Container, Typography } from '@mui/material';
+import { Button, Chip, Container } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -14,7 +14,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../../hooks/useAuth';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
-import Spinner from '../../../components/Spinner/Spinner';
 
 const ManageAllOrders = () => {
    const [orders, setOrders] = useState([]);
@@ -69,8 +68,8 @@ const ManageAllOrders = () => {
             })
          );
 
-         // toast.success('Order Approved!');
-         alert('shipped');
+         toast.success('Order Approved!');
+         
       }
    };
 
@@ -100,7 +99,7 @@ const ManageAllOrders = () => {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {loading ? <Spinner /> : orders?.map(
+                     {orders?.map(
                         ({ _id, orderItem, status, userName, email }) => (
                            <TableRow
                               key={_id}
@@ -215,7 +214,7 @@ const ManageAllOrders = () => {
          </Container>
          <ToastContainer
             position='top-left'
-            autoClose={1000}
+            autoClose={2000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
