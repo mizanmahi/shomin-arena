@@ -49,7 +49,6 @@ const useFirebase = () => {
 
       } catch (error) {
          setAuthError(error.message);
-         console.log(error.message);
       } finally {
          setUserLoading(false);
       }
@@ -65,14 +64,12 @@ const useFirebase = () => {
       try {
          setUserLoading(true);
          const result = await signInWithEmailAndPassword(auth, email, password);
-         console.log(result.user);
          setAuthError(null);
          location?.state?.from
             ? history.push(location.state.from.pathname)
             : history.push('/');
       } catch (error) {
          setAuthError(error.message);
-         console.log(error.message);
       } finally {
          setUserLoading(false);
       }
@@ -117,14 +114,12 @@ const useFirebase = () => {
    if (user) {
       setUserLoading(true)
       axiAuth.get(`/users/${user?.email}`).then(({ data }) => {
-         console.log(data);
          setAdmin(data?.role ? data.role === 'admin' : false);
          setUserLoading(false)
       });
    }
 }, [user]);
 
-console.log(admin);
 
 
 

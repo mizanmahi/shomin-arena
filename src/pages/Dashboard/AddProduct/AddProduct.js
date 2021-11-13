@@ -14,12 +14,10 @@ const AddProduct = () => {
       formState: { errors },
    } = useForm();
 
-   console.log(errors);
 
    const { user } = useAuth();
 
    const handleAdd = async (formData) => {
-      console.log(formData);
       
       const { data } = await axiosInstance.post('/headphones', {
          ...formData,

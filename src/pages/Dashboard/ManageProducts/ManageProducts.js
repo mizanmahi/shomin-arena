@@ -32,7 +32,6 @@ const ManageProducts = () => {
    }, []);
 
    const deleteHandler = async (id) => {
-      console.log(id);
       const response = await Swal.fire({
          title: 'Deleting Products',
          text: `Are you sure you want to Delete?`,

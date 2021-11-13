@@ -17,7 +17,6 @@ const Shipping = () => {
       reset,
       formState: { errors },
    } = useForm();
-   console.log(errors);
 
    const history = useHistory();
 

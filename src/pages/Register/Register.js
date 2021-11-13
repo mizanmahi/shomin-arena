@@ -32,7 +32,6 @@ const Register = () => {
       password,
       confirmPassword,
    }) => {
-      console.log({ userName, email, password, confirmPassword });
 
       if(password !== confirmPassword) {
          toast.error('Passwords do not match');
@@ -48,7 +47,6 @@ const Register = () => {
       reset();
    };
 
-   console.log(errors);
 
    // styles --------------------------------
    const registerHeaderStyles = {

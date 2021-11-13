@@ -7,5 +7,4 @@ export const saveUserInfo = async (displayName, email, method) => {
       url: '/users',
       data: user,
    });
-   console.log(data);
 };
