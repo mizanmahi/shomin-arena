@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 
 // app's Firebase configuration
 const firebaseConfig = {
-   apiKey: 'AIzaSyDbEbwRdYxBamfMeHZ9cpmKg2ZKJ97MADo',
-   authDomain: 'shomin-arena.firebaseapp.com',
-   projectId: 'shomin-arena',
-   storageBucket: 'shomin-arena.appspot.com',
-   messagingSenderId: '324747759177',
-   appId: '1:324747759177:web:94656b89bd88876282f998',
+   apiKey: process.env.REACT_APP_API_KEY,
+   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+   projectId: process.env.REACT_APP_PROJECT_ID,
+   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+   appId: process.env.REACT_APP_APP_ID,
 };
 
 // Initialize Firebase
