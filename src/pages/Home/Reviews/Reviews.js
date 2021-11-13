@@ -20,8 +20,8 @@ const Reviews = () => {
          <Container>
             <Box sx={{ textAlign: 'center', py: 8 }}>
                <Typography
-                  variant='h5'
-                  sx={{ fontWeight: 'bold' }}
+                  variant='h4'
+                  sx={{ fontWeight: 'bold', color: '#2f333a' }}
                   gutterBottom
                >
                   What our customer says

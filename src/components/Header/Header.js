@@ -1,21 +1,32 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Button, Container, Drawer, Typography } from '@mui/material';
+import { Avatar, Button, Container, Drawer, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import PersonIcon from '@mui/icons-material/Person';
 
 const Header = () => {
    const theme = useTheme();
-   const matches = useMediaQuery(theme?.breakpoints.down('md'));
+   const matches = useMediaQuery(theme?.breakpoints.down('sm'));
    const { user, logoutUser } = useAuth();
+   const [openDrawer, setOpenDrawer] = useState(false);
+   const [open, setOpen] = useState(false);
+
+   const handleClose = () => {
+      setOpen(false);
+   };
 
    const handleLogout = () => {
       logoutUser();
    };
+
+   useEffect(() => {
+      setOpenDrawer(false);
+   }, [matches]);
 
    return (
       <Box component='section' style={{ background: '#2F333A' }}>
@@ -38,7 +49,7 @@ const Header = () => {
                   </Typography>
                </Link>
                {matches ? (
-                  <MenuIcon />
+                  <MenuIcon onClick={() => setOpenDrawer(!openDrawer)} />
                ) : (
                   <nav
                      sx={{
@@ -73,6 +84,9 @@ const Header = () => {
                            >
                               {user.displayName}
                            </Typography>
+                           <Avatar sx={{ bgcolor: '#ff7004' }}>
+                                 <PersonIcon />
+                              </Avatar>
 
                            <Button
                               sx={{ color: '#ffffff' }}
@@ -94,20 +108,65 @@ const Header = () => {
          {/* ============================== drawer ============================== */}
          <Drawer
             anchor='left'
-            open={matches}
-            // onClose={() => setOpenDrawer(false)}
+            open={openDrawer && matches}
+            onClose={() => setOpenDrawer(false)}
          >
             <Box
                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  padding: '1rem',
-                  alignItems: 'flex-start',
-                  background: theme.palette.primary.main,
-                  color: '#fff',
+                  bgcolor: '#2F333A',
                   height: '100vh',
+                  minWidth: '180px',
+                  px: 2,
+                  py: 5,
                }}
-            ></Box>
+            >
+               <Box
+                  component='nav'
+                  sx={{
+                     display: 'flex',
+                     flexDirection: 'column',
+                     alignItems: 'flex-start',
+                  }}
+               >
+                  <Link to='/headphones' style={{ textDecoration: 'none' }}>
+                     <Button sx={{ color: '#ffffff' }}>Explore</Button>
+                  </Link>
+                  {user ? (
+                     <>
+                        <Link
+                           to='/dashboard'
+                           style={{ textDecoration: 'none' }}
+                        >
+                           <Button sx={{ color: '#ffffff' }}>Dashboard</Button>
+                        </Link>
+
+                        <Typography
+                           variant='body1'
+                           component='a'
+                           sx={{
+                              color: '#ff7004',
+                              px: 1,
+                              py: 1,
+                              textTransform: 'capitalize',
+                           }}
+                        >
+                           {user.displayName}
+                        </Typography>
+
+                        <Button
+                           sx={{ color: '#ffffff' }}
+                           onClick={handleLogout}
+                        >
+                           <LogoutIcon />
+                        </Button>
+                     </>
+                  ) : (
+                     <Link to='/signin' style={{ textDecoration: 'none' }}>
+                        <Button sx={{ color: '#ffffff' }}>Sign in</Button>
+                     </Link>
+                  )}
+               </Box>
+            </Box>
          </Drawer>
       </Box>
    );

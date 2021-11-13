@@ -48,7 +48,7 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
                height='270'
                image={imageUrl}
             />
-            <CardContent>
+            <CardContent sx={{textAlign: 'center'}}>
                <Typography gutterBottom variant='body1' component='div'>
                   {name?.slice(0, 23)}
                </Typography>

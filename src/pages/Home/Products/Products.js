@@ -83,8 +83,8 @@ const Products = () => {
          <Container>
             <Box sx={{ textAlign: 'center', py: 10 }}>
                <Typography
-                  variant='h5'
-                  sx={{ fontWeight: 'bold' }}
+                  variant='h4'
+                  sx={{ fontWeight: 'bold', color: '#2f333a' }}
                   gutterBottom
                >
                   Our Latest Headphones

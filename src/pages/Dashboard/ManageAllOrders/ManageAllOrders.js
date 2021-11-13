@@ -14,16 +14,19 @@ import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../../hooks/useAuth';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
+import Spinner from '../../../components/Spinner/Spinner';
 
 const ManageAllOrders = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
+   const [loading, setLoading] = useState(true)
+
 
    useEffect(() => {
       axiosInstance.get(`/orders`).then(({ data }) => {
          setOrders(data);
          console.log(data);
+         setLoading(false)
       });
    }, [user.email]);
 
@@ -97,7 +100,7 @@ const ManageAllOrders = () => {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {orders?.map(
+                     {loading ? <Spinner /> : orders?.map(
                         ({ _id, orderItem, status, userName, email }) => (
                            <TableRow
                               key={_id}
