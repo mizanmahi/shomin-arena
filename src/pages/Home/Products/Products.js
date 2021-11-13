@@ -71,7 +71,6 @@ const Products = () => {
       axiosInstance
          .get('/headphones')
          .then(({ data }) => {
-            console.log(data);
             setHeadphones(data);
             setLoading(false);
          })

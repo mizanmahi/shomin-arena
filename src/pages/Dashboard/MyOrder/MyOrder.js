@@ -21,7 +21,6 @@ const MyOrder = () => {
    useEffect(() => {
       axiosInstance.get(`/myOrders/?email=${user?.email}`).then(({ data }) => {
          setOrders(data);
-         console.log(data);
       });
    }, [user.email]);
 

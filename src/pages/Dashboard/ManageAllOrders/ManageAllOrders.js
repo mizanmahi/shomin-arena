@@ -24,13 +24,11 @@ const ManageAllOrders = () => {
    useEffect(() => {
       axiosInstance.get(`/orders`).then(({ data }) => {
          setOrders(data);
-         console.log(data);
          setLoading(false)
       });
    }, [user.email]);
 
    const deleteHandler = async (id) => {
-      console.log(id);
       const response = await Swal.fire({
          title: 'Cancelling Order',
          text: `Are you sure you want to cancel?`,

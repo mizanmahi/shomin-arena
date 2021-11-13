@@ -22,7 +22,6 @@ const Explore = () => {
       axiosInstance
          .get('/headphones')
          .then(({ data }) => {
-            console.log(data);
             setHeadphones(data);
             setDisplayHeadphones(data);
             setLoading(false);

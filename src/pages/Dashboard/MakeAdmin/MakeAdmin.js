@@ -33,7 +33,6 @@ const MakeAdmin = () => {
         })
         .catch((err) => {
            setErrorMessage('You are not allowed to make admin');
-           console.log(err.message);
         });
 
         setEmail('')

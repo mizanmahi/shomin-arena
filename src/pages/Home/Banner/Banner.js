@@ -2,7 +2,7 @@ import { Button, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import bannerImage from '../../../images/bannerImage.jpg';
+import bannerImage from '../../../images/ppp.png';
 
 const Banner = () => {
    return (
