@@ -1,10 +1,17 @@
-import { Button, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import {
+   Button,
+   IconButton,
+   Input,
+   TextField,
+   Typography,
+} from '@mui/material';
+import { Box, styled } from '@mui/system';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from '../../../hooks/useAuth';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 
 const AddProduct = () => {
    const {
@@ -14,23 +21,34 @@ const AddProduct = () => {
       formState: { errors },
    } = useForm();
 
-
    const { user } = useAuth();
 
-   const handleAdd = async (formData) => {
+   const handleAdd = async (submitData) => {
+      const { name, price, discountedPrice, description, image } = submitData;
       
-      const { data } = await axiosInstance.post('/headphones', {
-         ...formData,
-         createdAt: new Date().toLocaleDateString(),
-         createdBy: user.displayName,
-      });
+      // creating form data
+      const formData = new FormData();
+      formData.append('name', name)
+      formData.append('price', price)
+      formData.append('discountedPrice', discountedPrice);
+      formData.append('description', description);
+      formData.append('image', image[0]);
+      formData.append('createdAt', new Date().toLocaleDateString());
+      formData.append('createdBy', user.displayName);
+
+      console.log(formData);
+
+      const { data } = await axiosInstance.post('/headphones', formData);
+      console.log(data);
       if (data.headphoneId) {
          toast.success(data.message);
          reset();
       }
    };
-   
-   
+
+   // const Input = styled('input')({
+   //    display: 'none',
+   //  });
 
    return (
       <Box
@@ -46,7 +64,7 @@ const AddProduct = () => {
                py: 8,
                maxWidth: '30rem',
                textAlign: 'center',
-               borderRadius: 2
+               borderRadius: 2,
             }}
          >
             <Typography variant='h5' align='center'>
@@ -81,7 +99,12 @@ const AddProduct = () => {
                required
             />
             <TextField
-               {...register('description', {minLength: {value: 100, message: 'Description must be 100 characters long'}})}
+               {...register('description', {
+                  minLength: {
+                     value: 100,
+                     message: 'Description must be 100 characters long',
+                  },
+               })}
                variant='standard'
                sx={{ width: '80%', mb: 2 }}
                label='Description'
@@ -99,7 +122,18 @@ const AddProduct = () => {
                type='text'
                required
             />
-
+            <br />
+            <label htmlFor='icon-button-file'>
+               <Input accept='image/*' type='file' {...register('image')} />
+               <IconButton
+                  color='primary'
+                  aria-label='upload picture'
+                  component='span'
+               >
+                  <PhotoCamera />
+               </IconButton>
+            </label>
+            <br />
             <Button
                type='submit'
                variant='contained'

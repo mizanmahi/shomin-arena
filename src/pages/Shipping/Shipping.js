@@ -54,7 +54,7 @@ const Shipping = () => {
             if (response.isConfirmed) {
                history.push('/dashboard');
             } else {
-               history.push('/explore');
+               history.push('/headphones');
             }
          }
       } catch (error) {}

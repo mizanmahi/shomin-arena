@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useHistory } from 'react-router';
+import { useAuth } from '../../../hooks/useAuth';
 
 
 const Product = ({_id, name, price, discountedPrice, description, imageUrl }) => {
@@ -27,7 +28,7 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
          md={3}
          sx={{ display: 'flex', justifyContent: 'center' }}
       >
-         <Card sx={{ maxWidth: 276, position: 'relative', boxShadow: 0 }}>
+         <Card sx={{ maxWidth: 276, position: 'relative', boxShadow: 0 }} data-aos="fade-up" data-aos-duration="1000">
             <Chip
                label={
                   -Math.round(((price - discountedPrice) / price) * 100) + '%'
@@ -59,9 +60,9 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
                         textDecoration: 'line-through',
                      }}
                   >
-                     Tk{price}
+                     Tk {price}
                   </span>{' '}
-                  &nbsp; Tk{discountedPrice}
+                  &nbsp; Tk {discountedPrice}
                </Typography>
                <Button
                   onClick={() => handleClick(_id)}
@@ -74,13 +75,12 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
                      mx: 'auto',
                      display: 'flex',
                      alignItems: 'center',
-                     justifyContent: 'center',
                      borderColor: '#000',
                      mb: 1
                   }}
                 
                >
-                  <ShoppingCartIcon />
+                  <ShoppingCartIcon sx={{mr: '1rem'}} />
                   Buy Now
                </Button>
                <Typography variant='body2' color='text.secondary'>

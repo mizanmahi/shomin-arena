@@ -1,4 +1,4 @@
-import { Chip, Container} from '@mui/material';
+import { Button, Chip, Container } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -13,10 +13,12 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../../hooks/useAuth';
+import { useHistory, useRouteMatch } from 'react-router';
 
 const MyOrder = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
+   const history = useHistory()
 
    useEffect(() => {
       axiosInstance.get(`/myOrders/?email=${user?.email}`).then(({ data }) => {
@@ -49,6 +51,12 @@ const MyOrder = () => {
       }
    };
 
+   const {url, path} = useRouteMatch();
+
+   const handlePay = (id) => {
+      history.push(`${url}/pay/${id}`)
+   }
+
    return (
       <Box component='section'>
          <Container>
@@ -67,13 +75,19 @@ const MyOrder = () => {
                            Status
                         </TableCell>
                         <TableCell align='center' sx={{ fontWeight: 'bold' }}>
+                           Payment
+                        </TableCell>
+                        <TableCell align='center' sx={{ fontWeight: 'bold' }}>
                            Action
                         </TableCell>
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {orders?.map(({ _id, orderItem, status }) => (
+                     {orders?.map(({ _id, orderItem, status }, i) => (
                         <TableRow
+                           data-aos={i % 2 === 0 ? 'fade-left' : 'fade-right' }
+                           data-aos-offset='300'
+                           data-aos-easing='ease-in-sine'
                            key={_id}
                            sx={{
                               '&:last-child td, &:last-child th': { border: 0 },
@@ -94,17 +108,23 @@ const MyOrder = () => {
                               {orderItem.price} tk
                            </TableCell>
                            <TableCell align='center'>
-                           <Chip
-                                       label={status}
-                                       sx={{
-                                          bgcolor: `${
-                                             status === 'shipped'
-                                                ? 'green'
-                                                : '#f14b4b'
-                                          }`,
-                                          color: '#ffffff',
-                                       }}
-                                    />
+                              <Chip
+                                 label={status}
+                                 sx={{
+                                    bgcolor: `${
+                                       status === 'shipped'
+                                          ? 'green'
+                                          : '#f14b4b'
+                                    }`,
+                                    color: '#ffffff',
+                                 }}
+                              />
+                           </TableCell>
+                           <TableCell
+                              align='center'
+                              onClick={() => handlePay(_id)}
+                           >
+                              <Button color='error' variant='contained'>Pay</Button>
                            </TableCell>
                            <TableCell
                               align='center'

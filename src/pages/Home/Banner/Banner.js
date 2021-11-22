@@ -47,6 +47,7 @@ const Banner = () => {
                </Grid>
                <Grid item md={6}>
                   <img
+                  data-aos="fade-down"
                      src={bannerImage}
                      alt='bannerImage'
                      style={{ width: '100%' }}

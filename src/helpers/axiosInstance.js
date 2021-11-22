@@ -6,13 +6,16 @@ if (localStorage.getItem('idToken')) {
    headers.authorization = `Bearer ${localStorage.getItem('idToken')}`;
 }
 
+const baseURL = 'http://localhost:5000'
+// const baseURL = 'https://shomin-arena.herokuapp.com'
+
 //@ creating a axios instance with some basic configuration
 export const axiosInstance = axios.create({
-   baseURL: 'https://shomin-arena.herokuapp.com',
+   baseURL
 });
 
 //@ axios instance with auth token
 export const axiAuth = axios.create({
-   baseURL: 'https://shomin-arena.herokuapp.com',
+   baseURL,
    headers,
 });

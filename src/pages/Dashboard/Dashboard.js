@@ -35,6 +35,7 @@ import BallotIcon from '@mui/icons-material/Ballot';
 import BorderAllIcon from '@mui/icons-material/BorderAll';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import AdminRoute from '../../components/AdminRoute/AdminRoute';
+import Payment from './Payment/Payment';
 
 const drawerWidth = 240;
 
@@ -301,8 +302,10 @@ const Dashboard = (props) => {
                   <Route exact path={path}>
                      {admin ? <ManageAllOrders /> : <MyOrder />}
                   </Route>
-                  <Route path={`${path}/pay`}>
-                     <Typography sx={{textAlign: 'center', mt: 10, color: '#2f333a'}} variant='h4' >Payment is under construction 🏗</Typography>
+               
+                  <Route  path={`${path}/pay/:orderId`}>
+                     {/* <Typography sx={{textAlign: 'center', mt: 10, color: '#2f333a'}} variant='h4' >Payment is under construction 🏗</Typography> */}
+                    <Payment />
                   </Route>
                   <Route path={`${path}/review`}>
                      <Review />

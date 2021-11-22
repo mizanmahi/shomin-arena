@@ -6,6 +6,7 @@ const Review = ({ name, company, description, rating, createdAt }) => {
    return (
       <Grid item xs={12} sm={6} md={4}>
          <Paper
+         data-aos="zoom-in"
             sx={{
                px: 2,
                py: 3,

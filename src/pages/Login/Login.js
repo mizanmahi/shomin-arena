@@ -36,7 +36,9 @@ const Login = () => {
       reset();
    };
 
-   // styles --------------------------------
+   console.log(errors);
+
+   // styles --------------------
    const registerHeaderStyles = {
       textAlign: 'center',
       height: '20vh',
@@ -78,6 +80,7 @@ const Login = () => {
                </Box>
             </Container>
          </Box>
+         {/* ===================== */}
          <Container>
             <Grid container>
                <Grid

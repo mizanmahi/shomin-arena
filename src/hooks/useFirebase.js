@@ -69,6 +69,7 @@ const useFirebase = () => {
             ? history.push(location.state.from.pathname)
             : history.push('/');
       } catch (error) {
+         console.log({ signInError: error.message });
          setAuthError(error.message);
       } finally {
          setUserLoading(false);

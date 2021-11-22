@@ -3,15 +3,18 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Shipping from './pages/Shipping/Shipping';
 import Login from './pages/Login/Login';
-import AuthContextProvider from './context/AuthContextProvider';
 import Register from './pages/Register/Register';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Explore from './pages/Explore/Explore';
+import NotFound from './pages/NotFound/NotFound';
+import { useAuth } from './hooks/useAuth';
 
 function App() {
+   const {user} = useAuth();
+   
    return (
-      <AuthContextProvider>
+     
          <div className='App'>
             <Router>
                <Switch>
@@ -28,18 +31,21 @@ function App() {
                      <Shipping />
                   </ProtectedRoute>
                   <Route exact path='/signin'>
-                     <Login />
+                     {user ? <Home /> : <Login />}
                   </Route>
                   <Route exact path='/register'>
-                     <Register />
+                     {user ? <Home /> : <Register />}
                   </Route>
                   <ProtectedRoute  path='/dashboard'>
                      <Dashboard />
                   </ProtectedRoute>
+                  <ProtectedRoute  path='*'>
+                     <NotFound />
+                  </ProtectedRoute>
                </Switch>
             </Router>
          </div>
-      </AuthContextProvider>
+
    );
 }
 
