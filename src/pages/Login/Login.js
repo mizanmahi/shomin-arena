@@ -22,17 +22,20 @@ const Login = () => {
       formState: { errors },
    } = useForm();
 
+   console.log(errors);
+
    const history = useHistory();
    const location = useLocation();
    const { loginWithEmailAndPassword, authError, userLoading } = useAuth();
-
+   
    const handleLogin = async ({ email, password }) => {
       loginWithEmailAndPassword(email, password, location, history);
 
-      if (authError) {
+     /*  if (authError) {
          toast.error(authError);
+         console.log(authError);
       }
-
+ */
       reset();
    };
 
@@ -138,6 +141,7 @@ const Login = () => {
                            'Sign in'
                         )}
                      </Button>
+                     <h2>{ authError }</h2>
                      <Typography sx={{ mt: 1 }}>
                         Need an account? <Link to='register'>Register</Link>
                      </Typography>

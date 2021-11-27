@@ -1,4 +1,4 @@
-import { Button, Chip, Container } from '@mui/material';
+import { Button, Chip, CircularProgress, Container } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -18,7 +18,7 @@ import { useHistory, useRouteMatch } from 'react-router';
 const MyOrder = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
-   const history = useHistory()
+   const history = useHistory();
 
    useEffect(() => {
       axiosInstance.get(`/myOrders/?email=${user?.email}`).then(({ data }) => {
@@ -51,11 +51,11 @@ const MyOrder = () => {
       }
    };
 
-   const {url} = useRouteMatch();
+   const { url } = useRouteMatch();
 
    const handlePay = (id) => {
-      history.push(`${url}/pay/${id}`)
-   }
+      history.push(`${url}/pay/${id}`);
+   };
 
    return (
       <Box component='section'>
@@ -83,9 +83,9 @@ const MyOrder = () => {
                      </TableRow>
                   </TableHead>
                   <TableBody>
-                     {orders?.map(({ _id, orderItem, status }, i) => (
+                     {orders?.map(({ _id, orderItem, status, payment }, i) => (
                         <TableRow
-                           data-aos={i % 2 === 0 ? 'fade-left' : 'fade-right' }
+                           data-aos={i % 2 === 0 ? 'fade-left' : 'fade-right'}
                            data-aos-offset='300'
                            data-aos-easing='ease-in-sine'
                            key={_id}
@@ -96,7 +96,11 @@ const MyOrder = () => {
                         >
                            <TableCell component='th' scope='row'>
                               <img
-                                 src={orderItem?.imageUrl.includes('http') ? orderItem?.imageUrl : `data:image/jpeg;base64,${orderItem?.imageUrl}`}
+                                 src={
+                                    orderItem?.imageUrl.includes('http')
+                                       ? orderItem?.imageUrl
+                                       : `data:image/jpeg;base64,${orderItem?.imageUrl}`
+                                 }
                                  alt='product'
                                  style={{ maxWidth: '5rem' }}
                               />
@@ -124,7 +128,20 @@ const MyOrder = () => {
                               align='center'
                               onClick={() => handlePay(_id)}
                            >
-                              <Button color='error' variant='contained'>Pay</Button>
+                              {payment?.status === 'succeeded' ? (
+                                 <Chip
+                                    label={'Paid'}
+                                    sx={{
+                                       bgcolor: 'green',
+
+                                       color: '#ffffff',
+                                    }}
+                                 />
+                              ) : (
+                                 <Button color='primary' variant='contained'>
+                                    Pay
+                                 </Button>
+                              )}
                            </TableCell>
                            <TableCell
                               align='center'
@@ -142,6 +159,16 @@ const MyOrder = () => {
                   </TableBody>
                </Table>
             </TableContainer>
+            {orders.length === 0 && (
+               <CircularProgress
+                  sx={{
+                     mx: 'auto',
+                     display: 'block',
+                     mt: 5,
+                     '& .MuiCircularProgress-circle': { stroke: '#2f333a' },
+                  }}
+               />
+            )}
          </Container>
          <ToastContainer
             position='top-left'

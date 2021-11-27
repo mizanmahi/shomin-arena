@@ -64,7 +64,7 @@ const useFirebase = () => {
       try {
          setUserLoading(true);
          const result = await signInWithEmailAndPassword(auth, email, password);
-         setAuthError(null);
+         setAuthError('');
          location?.state?.from
             ? history.push(location.state.from.pathname)
             : history.push('/');

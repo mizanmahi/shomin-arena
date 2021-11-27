@@ -1,4 +1,5 @@
 import {
+   CircularProgress,
    Container,
    Table,
    TableBody,
@@ -100,14 +101,20 @@ const ManageProducts = () => {
                            >
                               <TableCell component='th' scope='row'>
                                  <img
-                                    src={imageUrl.includes('http') ? imageUrl : `data:image/jpeg;base64,${imageUrl}`}
+                                    src={
+                                       imageUrl.includes('http')
+                                          ? imageUrl
+                                          : `data:image/jpeg;base64,${imageUrl}`
+                                    }
                                     alt='product'
                                     style={{ maxWidth: '5rem' }}
                                  />
                               </TableCell>
                               <TableCell align='center'>
                                  {createdAt}{' '}
-                                 <Typography variant='body2' color='gray'>Created by {createdBy}</Typography>
+                                 <Typography variant='body2' color='gray'>
+                                    Created by {createdBy}
+                                 </Typography>
                               </TableCell>
                               <TableCell align='center'>{name}</TableCell>
                               <TableCell align='center'>{price}</TableCell>
@@ -129,6 +136,16 @@ const ManageProducts = () => {
                   </TableBody>
                </Table>
             </TableContainer>
+            {headphones.length === 0 && (
+               <CircularProgress
+                  sx={{
+                     mx: 'auto',
+                     display: 'block',
+                     mt: 5,
+                     '& .MuiCircularProgress-circle': { stroke: '#2f333a' },
+                  }}
+               />
+            )}
          </Container>
          <ToastContainer
             position='top-left'

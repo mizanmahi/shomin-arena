@@ -18,6 +18,7 @@ import {
    Route,
    useHistory,
    useRouteMatch,
+   useLocation,
    Switch,
    Link,
 } from 'react-router-dom';
@@ -46,6 +47,9 @@ const Dashboard = (props) => {
    let { path, url } = useRouteMatch();
    const history = useHistory();
    const { user, logoutUser, admin } = useAuth();
+
+   const location = useLocation();
+   console.log(location);
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -102,6 +106,7 @@ const Dashboard = (props) => {
          icon: AdminPanelSettingsIcon,
          onClick: () => {
             history.push(`${url}/makeAdmin`);
+
          },
       },
    ];
@@ -226,7 +231,6 @@ const Dashboard = (props) => {
                      height: '100vh',
                      flexDirection: 'column',
                      justifyContent: 'space-between',
-                     alignItems: 'center',
                      pt: 3,
                   }}
                >
@@ -275,8 +279,8 @@ const Dashboard = (props) => {
                      height: '100vh',
                      flexDirection: 'column',
                      justifyContent: 'space-between',
-                     alignItems: 'center',
                      pt: 3,
+                     textAlign: 'center',
                   }}
                >
                   {drawer}{' '}

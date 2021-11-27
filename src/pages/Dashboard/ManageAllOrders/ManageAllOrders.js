@@ -1,4 +1,4 @@
-import { Button, Chip, Container } from '@mui/material';
+import { Button, Chip, CircularProgress, Container } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -18,7 +18,6 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 const ManageAllOrders = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
-
 
    useEffect(() => {
       axiosInstance.get(`/orders`).then(({ data }) => {
@@ -65,7 +64,6 @@ const ManageAllOrders = () => {
          );
 
          toast.success('Order Approved!');
-         
       }
    };
 
@@ -108,7 +106,11 @@ const ManageAllOrders = () => {
                            >
                               <TableCell component='th' scope='row'>
                                  <img
-                                    src={orderItem?.imageUrl.includes('http') ? orderItem?.imageUrl : `data:image/jpeg;base64,${orderItem?.imageUrl}`}
+                                    src={
+                                       orderItem?.imageUrl.includes('http')
+                                          ? orderItem?.imageUrl
+                                          : `data:image/jpeg;base64,${orderItem?.imageUrl}`
+                                    }
                                     alt='product'
                                     style={{ maxWidth: '5rem' }}
                                  />
@@ -207,6 +209,16 @@ const ManageAllOrders = () => {
                   </TableBody>
                </Table>
             </TableContainer>
+            {orders.length === 0 && (
+               <CircularProgress
+                  sx={{
+                     mx: 'auto',
+                     display: 'block',
+                     mt: 5,
+                     '& .MuiCircularProgress-circle': { stroke: '#2f333a' },
+                  }}
+               />
+            )}
          </Container>
          <ToastContainer
             position='top-left'

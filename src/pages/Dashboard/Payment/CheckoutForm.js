@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, CircularProgress, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +11,7 @@ const CheckoutForm = ({ order }) => {
    const elements = useElements();
    const [error, setError] = useState('');
    const [clientSecret, setClientSecret] = useState('');
-   const {user} = useAuth();
+   const { user } = useAuth();
    const [success, setSuccess] = useState('');
    const [processing, setProcessing] = useState(false);
 
@@ -44,44 +44,47 @@ const CheckoutForm = ({ order }) => {
          card,
       });
 
-      if(err){
+      if (err) {
          setError(err.message);
          setProcessing(false);
          setSuccess('');
-      }else{
+      } else {
          console.log(paymentMethod);
-         setError('')
+         setError('');
       }
 
       // payment intent
-      const {paymentIntent, error} = await stripe.confirmCardPayment(
+      const { paymentIntent, error } = await stripe.confirmCardPayment(
          clientSecret,
          {
-           payment_method: {
-             card,
-             billing_details: {
-               name: order?.userName,
-               email: user.email,
-              
-             },
-           },
-         },
-       );
+            payment_method: {
+               card,
+               billing_details: {
+                  name: order?.userName,
+                  email: user.email,
+               },
+            },
+         }
+      );
 
-       if(error){
-          setError(error.message);
+      if (error) {
+         setError(error.message);
          setProcessing(false);
-          setSuccess('')
-       }else {
-         setSuccess('Payment successfully completed!')
-          console.log(paymentIntent);
+         setSuccess('');
+      } else {
+         setSuccess('Payment successfully completed!');
+         console.log(paymentIntent);
          setProcessing(false);
-       }
+         setError('');
+
+         // save payment info to database
+         const {data} = await axiosInstance.put(`/orders/payments/${order?._id}`, paymentIntent);
+      }
    };
 
    return (
       <Box>
-         <Typography sx={{textAlign: 'center'}} variant='h5'>
+         <Typography sx={{ textAlign: 'center' }} variant='h5'>
             Pay for {order?.orderItem.name}
          </Typography>
          <form onSubmit={handleSubmit}>
@@ -101,14 +104,18 @@ const CheckoutForm = ({ order }) => {
                   },
                }}
             />
-            {processing ? <Spinner /> :<Button
-               type='submit'
-               variant='contained'
-               sx={{ mt: 5 }}
-               disabled={!stripe}
-            >
-               Pay ${order?.orderItem?.discountedPrice}
-            </Button>}
+            {processing ? (
+               <CircularProgress sx={{ ml: 5, mt: 2 }} size='1.5rem' />
+            ) : (
+               <Button
+                  type='submit'
+                  variant='contained'
+                  sx={{ mt: 5 }}
+                  disabled={!stripe || !!success}
+               >
+                  Pay ${order?.orderItem?.discountedPrice}
+               </Button>
+            )}
             <Typography sx={{ textAlign: 'center', mt: 1 }}>
                {error && (
                   <span
