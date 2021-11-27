@@ -18,15 +18,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const ManageProducts = () => {
    const [headphones, setHeadphones] = useState([]);
-   const [loading, setLoading] = useState(true)
 
    useEffect(() => {
       axiosInstance
          .get('/headphones')
          .then(({ data }) => {
-            console.log(data);
             setHeadphones(data);
-            setLoading(false)
          })
          .catch((err) => console.log(err.message));
    }, []);
@@ -103,7 +100,7 @@ const ManageProducts = () => {
                            >
                               <TableCell component='th' scope='row'>
                                  <img
-                                    src={imageUrl}
+                                    src={imageUrl.includes('http') ? imageUrl : `data:image/jpeg;base64,${imageUrl}`}
                                     alt='product'
                                     style={{ maxWidth: '5rem' }}
                                  />

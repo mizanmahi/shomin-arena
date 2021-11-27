@@ -1,4 +1,11 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material';
+import {
+   Button,
+   CircularProgress,
+   Container,
+   Grid,
+   TextField,
+   Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -35,8 +42,6 @@ const Shipping = () => {
       try {
          const { data } = await axiosInstance.post('/orders', order);
          if (data.orderId) {
-
-             
             const response = await Swal.fire({
                title: 'Thanks for your Order',
                text: `${headphone.name} was added to your order list`,
@@ -79,15 +84,23 @@ const Shipping = () => {
                <Grid container spacing={2} sx={{ alignItems: 'center' }}>
                   <Grid item md={7}>
                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <img
-                           src={headphone.imageUrl}
-                           alt='headphone to order'
-                           style={{
-                              marginRight: '1rem',
-                              width: '70%',
-                              maxWidth: '20rem',
-                           }}
-                        />
+                        {headphone?.imageUrl ? (
+                           <img
+                              src={
+                                 headphone?.imageUrl?.includes('http')
+                                    ? headphone?.imageUrl
+                                    : `data:image/jpeg;base64,${headphone?.imageUrl}`
+                              }
+                              alt='headphone to order'
+                              style={{
+                                 marginRight: '1rem',
+                                 width: '70%',
+                                 maxWidth: '20rem',
+                              }}
+                           />
+                        ) : (
+                           <CircularProgress sx={{mr: 5}} />
+                        )}
                         <Box sx={{ textAlign: 'left' }}>
                            <Typography variant='body2'>
                               Availability: 9 in stock
@@ -131,7 +144,7 @@ const Shipping = () => {
                            py: 5,
                            maxWidth: '30rem',
                            textAlign: 'center',
-                           boxShadow: 1
+                           boxShadow: 1,
                         }}
                      >
                         <Typography variant='h5' align='center' sx={{ mb: 2 }}>

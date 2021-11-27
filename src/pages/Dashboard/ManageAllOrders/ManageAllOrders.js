@@ -18,13 +18,11 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 const ManageAllOrders = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
-   const [loading, setLoading] = useState(true)
 
 
    useEffect(() => {
       axiosInstance.get(`/orders`).then(({ data }) => {
          setOrders(data);
-         setLoading(false)
       });
    }, [user.email]);
 
@@ -110,7 +108,7 @@ const ManageAllOrders = () => {
                            >
                               <TableCell component='th' scope='row'>
                                  <img
-                                    src={orderItem?.imageUrl}
+                                    src={orderItem?.imageUrl.includes('http') ? orderItem?.imageUrl : `data:image/jpeg;base64,${orderItem?.imageUrl}`}
                                     alt='product'
                                     style={{ maxWidth: '5rem' }}
                                  />

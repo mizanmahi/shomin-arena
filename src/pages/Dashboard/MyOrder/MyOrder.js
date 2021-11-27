@@ -51,7 +51,7 @@ const MyOrder = () => {
       }
    };
 
-   const {url, path} = useRouteMatch();
+   const {url} = useRouteMatch();
 
    const handlePay = (id) => {
       history.push(`${url}/pay/${id}`)
@@ -96,7 +96,7 @@ const MyOrder = () => {
                         >
                            <TableCell component='th' scope='row'>
                               <img
-                                 src={orderItem?.imageUrl}
+                                 src={orderItem?.imageUrl.includes('http') ? orderItem?.imageUrl : `data:image/jpeg;base64,${orderItem?.imageUrl}`}
                                  alt='product'
                                  style={{ maxWidth: '5rem' }}
                               />

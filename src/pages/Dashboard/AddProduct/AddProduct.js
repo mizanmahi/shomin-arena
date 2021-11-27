@@ -1,7 +1,6 @@
 import {
    Button,
    IconButton,
-   Input,
    TextField,
    Typography,
 } from '@mui/material';
@@ -36,8 +35,6 @@ const AddProduct = () => {
       formData.append('createdAt', new Date().toLocaleDateString());
       formData.append('createdBy', user.displayName);
 
-      console.log(formData);
-
       const { data } = await axiosInstance.post('/headphones', formData);
       console.log(data);
       if (data.headphoneId) {
@@ -46,9 +43,9 @@ const AddProduct = () => {
       }
    };
 
-   // const Input = styled('input')({
-   //    display: 'none',
-   //  });
+   const Input = styled('input')({
+      borderBottom: 0
+    });
 
    return (
       <Box
@@ -114,17 +111,17 @@ const AddProduct = () => {
                maxRows={4}
                required
             />
-            <TextField
+            {/* <TextField
                {...register('imageUrl', { required: true })}
                variant='standard'
                sx={{ width: '80%', mb: 2 }}
                label='Image Url'
                type='text'
                required
-            />
+            /> */}
             <br />
             <label htmlFor='icon-button-file'>
-               <Input accept='image/*' type='file' {...register('image')} />
+               <Input accept='image/*' id="icon-button-file" type='file' {...register('image')} />
                <IconButton
                   color='primary'
                   aria-label='upload picture'

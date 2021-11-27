@@ -22,7 +22,6 @@ const CheckoutForm = ({ order }) => {
             price: order?.orderItem.discountedPrice,
          })
          .then(({ data }) => {
-            console.log(data);
             setClientSecret(data.clientSecret);
          });
    }, [order?.orderItem.discountedPrice, order?.userName]);

@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useHistory } from 'react-router';
-import { useAuth } from '../../../hooks/useAuth';
 
 
 const Product = ({_id, name, price, discountedPrice, description, imageUrl }) => {
@@ -47,7 +46,7 @@ const Product = ({_id, name, price, discountedPrice, description, imageUrl }) =>
                component='img'
                alt='green iguana'
                height='270'
-               image={imageUrl}
+               image={imageUrl.includes('http') ? imageUrl : `data:image/jpeg;base64,${imageUrl}`}
             />
             <CardContent sx={{textAlign: 'center'}}>
                <Typography gutterBottom variant='body1' component='div'>
