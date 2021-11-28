@@ -16,13 +16,12 @@ import { axiAuth } from '../helpers/axiosInstance';
 initializeFirebase();
 
 const useFirebase = () => {
-    const [user, setUser] = useState(null);
-    const [userLoading, setUserLoading] = useState(true);
-    const [authError, setAuthError] = useState('');
+   const [user, setUser] = useState(null);
+   const [userLoading, setUserLoading] = useState(true);
+   const [authError, setAuthError] = useState('');
    const [admin, setAdmin] = useState(false);
 
-    
-    const auth = getAuth()
+   const auth = getAuth();
 
    //@ REGISTER WITH EMAIL AND PASS
    const registerWithEmailAndPassword = async (
@@ -46,9 +45,10 @@ const useFirebase = () => {
 
          // redirect to home page
          history.push('/');
-
       } catch (error) {
-         setAuthError(error.message);
+         if (error.message.includes('auth/email-already-in-use')) {       
+            setAuthError('Email already in use!');
+         }
       } finally {
          setUserLoading(false);
       }
@@ -63,14 +63,19 @@ const useFirebase = () => {
    ) => {
       try {
          setUserLoading(true);
-         const result = await signInWithEmailAndPassword(auth, email, password);
+         await signInWithEmailAndPassword(auth, email, password);
          setAuthError('');
          location?.state?.from
             ? history.push(location.state.from.pathname)
             : history.push('/');
       } catch (error) {
-         console.log({ signInError: error.message });
-         setAuthError(error.message);
+         if (error.message.includes('auth/user-not-found')) {
+            setAuthError('No user found with this email 😟');
+         } else if (error.message.includes('auth/wrong-password')) {
+            setAuthError('Wrong password 😟');
+         } else {
+            setAuthError(error.message);
+         }
       } finally {
          setUserLoading(false);
       }
@@ -83,46 +88,42 @@ const useFirebase = () => {
       });
    };
 
-
    //@ OBSERVING AUTH STATE CHANGES
    useEffect(() => {
-    const unSubscribe = onAuthStateChanged(
-       auth,
-       (user) => {
-          if (user) {
-             setUser(user);
-             getIdToken(user).then((token) => {
-                localStorage.setItem('idToken', token);
-             });
-          } else {
-             setUser(null);
-          }
-          setUserLoading(false);
-       },
-       (err) => {
-          console.log(
-             'Error from auth state changed error callback',
-             err.message
-          );
-          setAuthError(err.message);
-       }
-    );
+      const unSubscribe = onAuthStateChanged(
+         auth,
+         (user) => {
+            if (user) {
+               setUser(user);
+               getIdToken(user).then((token) => {
+                  localStorage.setItem('idToken', token);
+               });
+            } else {
+               setUser(null);
+            }
+            setUserLoading(false);
+         },
+         (err) => {
+            console.log(
+               'Error from auth state changed error callback',
+               err.message
+            );
+            setAuthError(err.message);
+         }
+      );
 
-    return () => unSubscribe;
- }, [auth]);
+      return () => unSubscribe;
+   }, [auth]);
 
- useEffect(() => {
-   if (user) {
-      setUserLoading(true)
-      axiAuth.get(`/users/${user?.email}`).then(({ data }) => {
-         setAdmin(data?.role ? data.role === 'admin' : false);
-         setUserLoading(false)
-      });
-   }
-}, [user]);
-
-
-
+   useEffect(() => {
+      if (user) {
+         setUserLoading(true);
+         axiAuth.get(`/users/${user?.email}`).then(({ data }) => {
+            setAdmin(data?.role ? data.role === 'admin' : false);
+            setUserLoading(false);
+         });
+      }
+   }, [user]);
 
    return {
       user,

@@ -8,7 +8,7 @@ import {
    Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -23,8 +23,9 @@ const Register = () => {
    } = useForm();
 
    const history = useHistory();
-   const { registerWithEmailAndPassword, userLoading } = useAuth();
-   
+   const { registerWithEmailAndPassword, userLoading, authError } = useAuth();
+
+   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
    const handleRegister = async ({
       userName,
@@ -32,21 +33,15 @@ const Register = () => {
       password,
       confirmPassword,
    }) => {
-
-      if(password !== confirmPassword) {
-         toast.error('Passwords do not match');
+      setConfirmPasswordError('');
+      if (password !== confirmPassword) {
+         setConfirmPasswordError('Confirm password did not match!');
          return;
       }
 
-      try {
-         await registerWithEmailAndPassword(userName, email, password, history);
-      } catch (error) {
-         console.log(error.message);
-      }
-
+      await registerWithEmailAndPassword(userName, email, password, history);
       reset();
    };
-
 
    // styles --------------------------------
    const registerHeaderStyles = {
@@ -106,10 +101,14 @@ const Register = () => {
                         py: 8,
                         maxWidth: '30rem',
                         textAlign: 'center',
+                        borderRadius: 2,
                      }}
                   >
                      <Typography variant='h5' align='center'>
                         Register
+                     </Typography>
+                     <Typography sx={{ my: 3, color: 'red' }}>
+                        {authError ? authError : ''}
                      </Typography>
                      <TextField
                         {...register('userName', { required: true })}
@@ -124,6 +123,10 @@ const Register = () => {
                               value: true,
                               message: 'Email is required',
                            },
+                           pattern: {
+                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                              message: 'Invalid email address',
+                           },
                         })}
                         variant='standard'
                         sx={{ width: '60%', mb: 2 }}
@@ -131,30 +134,56 @@ const Register = () => {
                         type='email'
                         error={errors.email ? true : false}
                         helperText={errors.email ? errors.email.message : ''}
-                        required
                      />
                      <TextField
-                        {...register('password')}
+                        {...register('password', {
+                           required: {
+                              value: true,
+                              message: 'Password is required',
+                           },
+                           minLength: {
+                              value: 6,
+                              message:
+                                 'Password must be at least 6 characters long ',
+                           },
+                        })}
                         variant='standard'
                         sx={{ width: '60%', mb: 2 }}
                         label='Password'
                         type='password'
-                        required
+                        error={errors.password ? true : false}
+                        helperText={
+                           errors.password ? errors.password.message : ''
+                        }
                      />
                      <TextField
-                        {...register('confirmPassword')}
+                        {...register('confirmPassword', {
+                           required: {
+                              value: true,
+                              message: 'Please re enter the password',
+                           },
+                        })}
                         variant='standard'
                         sx={{ width: '60%', mb: 2 }}
                         label='Confirm password'
                         type='password'
-                        required
+                        error={errors.confirmPassword ? true : false}
+                        helperText={
+                           errors?.confirmPassword
+                              ? errors?.confirmPassword?.message
+                              : confirmPasswordError
+                        }
                      />
                      <Button
                         type='submit'
                         variant='contained'
                         sx={{ background: '#ff7004', width: '60%', mt: 3 }}
                      >
-                        {userLoading ?  <CircularProgress color='common' size='1.5rem' /> : 'Register'}
+                        {userLoading ? (
+                           <CircularProgress color='common' size='1.5rem' />
+                        ) : (
+                           'Register'
+                        )}
                      </Button>
                      <Typography sx={{ mt: 1 }}>
                         Have an account? <Link to='signin'>Sign In</Link>

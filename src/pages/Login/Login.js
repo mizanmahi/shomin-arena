@@ -12,7 +12,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { toast, ToastContainer } from 'react-toastify';
+// import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
    const {
@@ -22,21 +22,15 @@ const Login = () => {
       formState: { errors },
    } = useForm();
 
-   console.log(errors);
 
    const history = useHistory();
    const location = useLocation();
    const { loginWithEmailAndPassword, authError, userLoading } = useAuth();
-   
-   const handleLogin = async ({ email, password }) => {
-      loginWithEmailAndPassword(email, password, location, history);
 
-     /*  if (authError) {
-         toast.error(authError);
-         console.log(authError);
-      }
- */
-      reset();
+   const handleLogin = async ({ email, password }) => {
+      
+      loginWithEmailAndPassword(email, password, location, history);
+      reset()
    };
 
    console.log(errors);
@@ -100,6 +94,7 @@ const Login = () => {
                         py: 8,
                         maxWidth: '30rem',
                         textAlign: 'center',
+                        borderRadius: 2
                      }}
                   >
                      <Typography variant='h5' align='center'>
@@ -112,22 +107,40 @@ const Login = () => {
                               value: true,
                               message: 'Email is required',
                            },
+                           pattern: {
+                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                              message: 'Invalid email address',
+                           },
                         })}
                         variant='standard'
                         sx={{ width: '60%', mb: 2 }}
                         label='Email'
                         type='email'
                         error={errors.email ? true : false}
-                        helperText={errors.email ? errors.email.message : ''}
+                        helperText={errors.email ? errors?.email.message : ''}
                         required
                      />
                      <TextField
-                        {...register('password')}
+                        {...register('password', {
+                           required: {
+                              value: true,
+                              message: 'Password is required',
+                           },
+                           minLength: {
+                              value: 6,
+                              message:
+                                 'Password must be at least 6 characters long',
+                           },
+                        })}
                         variant='standard'
                         sx={{ width: '60%', mb: 2 }}
                         label='Password'
                         type='password'
-                        required
+                        // required
+                        error={errors.password ? true : false}
+                        helperText={
+                           errors.password ? errors.password.message : ''
+                        }
                      />
 
                      <Button
@@ -141,15 +154,17 @@ const Login = () => {
                            'Sign in'
                         )}
                      </Button>
-                     <h2>{ authError }</h2>
                      <Typography sx={{ mt: 1 }}>
                         Need an account? <Link to='register'>Register</Link>
+                     </Typography>
+                     <Typography sx={{ mt: 3, color: 'red' }}>
+                        {authError ? authError : ''}
                      </Typography>
                   </Box>
                </Grid>
             </Grid>
          </Container>
-         <ToastContainer
+         {/* <ToastContainer
             position='top-left'
             autoClose={3000}
             hideProgressBar={false}
@@ -159,7 +174,7 @@ const Login = () => {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-         />
+         /> */}
       </Box>
    );
 };

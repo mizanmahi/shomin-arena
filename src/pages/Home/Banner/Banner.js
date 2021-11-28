@@ -26,28 +26,33 @@ const Banner = () => {
                         Classic Deep Bass
                      </Typography>
                      <Typography variant='body2' sx={{}} gutterBottom>
-                        Shuer se-522 is a classic designed headphone with deep bass. Build quality is worth the price. Purchase it now before the price goes up.
+                        Shuer se-522 is a classic designed headphone with deep
+                        bass. Build quality is worth the price. Purchase it now
+                        before the price goes up.
                      </Typography>
-                     <Link to='/headphones' style={{textDecoration: 'none'}}>
-                     <Button
-                        variant='contained'
-                        color='primary'
-                        sx={{
-                           borderRadius: 0,
-                           background: '#ff7004',
-                           px: 2.5,
-                           py: 1,
-                           mt: 5,
-                        }}
-                     >
-                        Shop Now
-                     </Button>
+                     <Link to='/headphones' style={{ textDecoration: 'none' }}>
+                        <Button
+                           variant='contained'
+                           color='primary'
+                           sx={{
+                              borderRadius: 0,
+                              background: '#ff7004',
+                              '&:hover': {
+                                 bgcolor: '#ff7059',
+                              },
+                              px: 2.5,
+                              py: 1,
+                              mt: 5,
+                           }}
+                        >
+                           Shop Now
+                        </Button>
                      </Link>
                   </Box>
                </Grid>
                <Grid item md={6}>
                   <img
-                  data-aos="fade-down"
+                     data-aos='fade-down'
                      src={bannerImage}
                      alt='bannerImage'
                      style={{ width: '100%' }}

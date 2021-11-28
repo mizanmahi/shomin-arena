@@ -48,8 +48,6 @@ const Dashboard = (props) => {
    const history = useHistory();
    const { user, logoutUser, admin } = useAuth();
 
-   const location = useLocation();
-   console.log(location);
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);

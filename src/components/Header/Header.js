@@ -79,9 +79,9 @@ const Header = () => {
                            </Link>
 
                            <Chip
-                              sx={{ ml: 1 }}
-                              color='error'
-                              icon={<PersonIcon />}
+                              sx={{ ml: 1, bgcolor: '#ff7004', color: '#fff', fontSize: '1rem' }}
+                              // color='primary'
+                              icon={<PersonIcon sx={{fill: '#fff'}} />}
                               label={user.displayName}
                            />
                            <Button

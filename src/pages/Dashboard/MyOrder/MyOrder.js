@@ -1,4 +1,10 @@
-import { Button, Chip, CircularProgress, Container } from '@mui/material';
+import {
+   Button,
+   Chip,
+   CircularProgress,
+   Container,
+   Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -14,15 +20,18 @@ import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../../hooks/useAuth';
 import { useHistory, useRouteMatch } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const MyOrder = () => {
    const [orders, setOrders] = useState([]);
+   const [loading, setLoading] = useState(true);
    const { user } = useAuth();
    const history = useHistory();
 
    useEffect(() => {
       axiosInstance.get(`/myOrders/?email=${user?.email}`).then(({ data }) => {
          setOrders(data);
+         setLoading(false);
       });
    }, [user.email]);
 
@@ -159,7 +168,10 @@ const MyOrder = () => {
                   </TableBody>
                </Table>
             </TableContainer>
-            {orders.length === 0 && (
+            {orders?.length === 0 && !loading && (
+               <Typography variant='h5' sx={{textAlign: 'center', mt: 5}}>No Orders <Link to='/headphones'>Buy some</Link></Typography>
+            )}
+            {loading && (
                <CircularProgress
                   sx={{
                      mx: 'auto',

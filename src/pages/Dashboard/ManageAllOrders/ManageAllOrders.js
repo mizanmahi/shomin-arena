@@ -1,4 +1,4 @@
-import { Button, Chip, CircularProgress, Container } from '@mui/material';
+import { Button, Chip, CircularProgress, Container, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -18,12 +18,20 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 const ManageAllOrders = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
+   const [loading, setLoading] = useState(true);
+   const [test, setStatus] = useState('');
 
    useEffect(() => {
       axiosInstance.get(`/orders`).then(({ data }) => {
          setOrders(data);
+         setLoading(false);
       });
    }, [user.email]);
+
+   const handleChange = (event) => {
+      setStatus(event.target.value);
+      console.log('changing the status');
+    };
 
    const deleteHandler = async (id) => {
       const response = await Swal.fire({
@@ -189,6 +197,22 @@ const ManageAllOrders = () => {
                                              />
                                           </Button>
                                        )}
+                                       {/* <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={test}
+          label="Status"
+          onChange={handleChange}
+        >
+          <MenuItem value='ten'>Ten</MenuItem>
+          <MenuItem value='twenty'>Twenty</MenuItem>
+          <MenuItem value='thirty'>Thirty</MenuItem>
+        </Select>
+      </FormControl>
+    </Box> */}
                                     </Box>
                                  </Box>
                               </TableCell>
@@ -209,7 +233,10 @@ const ManageAllOrders = () => {
                   </TableBody>
                </Table>
             </TableContainer>
-            {orders.length === 0 && (
+            {orders?.length === 0 && !loading && (
+               <Typography variant='h5' sx={{textAlign: 'center', mt: 5}}>No Orders Found</Typography>
+            )}
+            {loading && (
                <CircularProgress
                   sx={{
                      mx: 'auto',
