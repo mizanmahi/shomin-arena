@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Button, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
 import Product from '../Product/Product';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import Spinner from '../../../components/Spinner/Spinner';
+import { Link } from 'react-router-dom';
 
 /* const products = [
    {
@@ -78,7 +79,7 @@ const Products = () => {
    }, []);
 
    return (
-      <Box component='section' sx={{}}>
+      <Box component='section'>
          <Container>
             <Box sx={{ textAlign: 'center', py: 10 }}>
                <Typography
@@ -105,6 +106,26 @@ const Products = () => {
                      ))
                   )}
                </Grid>
+               <Link to='/headphones' style={{ textDecoration: 'none' }}>
+                        <Button
+                           variant='contained'
+                           color='primary'
+                           sx={{
+                              borderRadius: 0,
+                              background: '#ff7004',
+                              display: 'block',
+                              mx: 'auto',
+                              '&:hover': {
+                                 bgcolor: '#ff7059',
+                              },
+                              px: 2.5,
+                              py: 1,
+                              mt: 5,
+                           }}
+                        >
+                           View All
+                        </Button>
+                     </Link>
             </Box>
          </Container>
       </Box>
