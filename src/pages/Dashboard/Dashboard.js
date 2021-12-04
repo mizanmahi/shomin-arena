@@ -43,11 +43,11 @@ const drawerWidth = 240;
 const Dashboard = (props) => {
    const { window } = props;
    const [mobileOpen, setMobileOpen] = React.useState(false);
-
+   const location = useLocation();
    let { path, url } = useRouteMatch();
+   console.log(location);
    const history = useHistory();
    const { user, logoutUser, admin } = useAuth();
-
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
@@ -60,6 +60,7 @@ const Dashboard = (props) => {
          onClick: () => {
             history.push(`${url}`);
          },
+         path: `${url}`,
       },
       {
          menu: 'Payment',
@@ -67,6 +68,7 @@ const Dashboard = (props) => {
          onClick: () => {
             history.push(`${url}/pay`);
          },
+         path: `${url}/pay`,
       },
       {
          menu: 'Review',
@@ -74,6 +76,7 @@ const Dashboard = (props) => {
          onClick: () => {
             history.push(`${url}/review`);
          },
+         path: `${url}/review`,
       },
    ];
 
@@ -84,6 +87,7 @@ const Dashboard = (props) => {
          onClick: () => {
             history.push(`${url}`);
          },
+         path: '/dashboard',
       },
       {
          menu: 'Add a product',
@@ -91,6 +95,7 @@ const Dashboard = (props) => {
          onClick: () => {
             history.push(`${url}/addProducts`);
          },
+         path: `${url}/addProducts`,
       },
       {
          menu: 'Manage products',
@@ -98,14 +103,15 @@ const Dashboard = (props) => {
          onClick: () => {
             history.push(`${url}/manageProducts`);
          },
+         path: `${url}/manageProducts`,
       },
       {
          menu: 'Make admin',
          icon: AdminPanelSettingsIcon,
          onClick: () => {
             history.push(`${url}/makeAdmin`);
-
          },
+         path: `${url}/makeAdmin`,
       },
    ];
 
@@ -114,7 +120,18 @@ const Dashboard = (props) => {
          <List>
             {admin
                ? adminMenu.map((menu, index) => (
-                    <ListItem button key={index} onClick={menu?.onClick}>
+                    <ListItem
+                       button
+                       key={index}
+                       onClick={menu?.onClick}
+                       sx={{
+                          bgcolor:
+                             menu.path === location.pathname ? '#ff7004' : '',
+                          '&:hover': {
+                             '& .MuiTypography-root': { color: '#ff7004' },
+                          },
+                       }}
+                    >
                        <ListItemIcon>
                           <menu.icon sx={{ color: '#ffffff' }} />
                        </ListItemIcon>
@@ -122,7 +139,18 @@ const Dashboard = (props) => {
                     </ListItem>
                  ))
                : userMenu.map((menu, index) => (
-                    <ListItem button key={index} onClick={menu?.onClick}>
+                    <ListItem
+                       button
+                       key={index}
+                       onClick={menu?.onClick}
+                       sx={{
+                          bgcolor:
+                             menu.path === location.pathname ? '#ff7004' : '',
+                          '&:hover': {
+                             '& .MuiTypography-root': { color: '#ff7004' },
+                          },
+                       }}
+                    >
                        <ListItemIcon>
                           <menu.icon sx={{ color: '#ffffff' }} />
                        </ListItemIcon>
@@ -207,7 +235,7 @@ const Dashboard = (props) => {
                   },
                }}
             >
-             <Link to='/' style={{ textDecoration: 'none' }}>
+               <Link to='/' style={{ textDecoration: 'none' }}>
                   <Typography
                      variant='h6'
                      sx={{
@@ -304,10 +332,10 @@ const Dashboard = (props) => {
                   <Route exact path={path}>
                      {admin ? <ManageAllOrders /> : <MyOrder />}
                   </Route>
-               
-                  <Route  path={`${path}/pay/:orderId`}>
+
+                  <Route path={`${path}/pay/:orderId`}>
                      {/* <Typography sx={{textAlign: 'center', mt: 10, color: '#2f333a'}} variant='h4' >Payment is under construction 🏗</Typography> */}
-                    <Payment />
+                     <Payment />
                   </Route>
                   <Route path={`${path}/review`}>
                      <Review />

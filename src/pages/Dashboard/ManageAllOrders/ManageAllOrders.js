@@ -1,4 +1,14 @@
-import { Button, Chip, CircularProgress, Container, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import {
+   Button,
+   Chip,
+   CircularProgress,
+   Container,
+   FormControl,
+   InputLabel,
+   MenuItem,
+   Select,
+   Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import Table from '@mui/material/Table';
@@ -31,7 +41,7 @@ const ManageAllOrders = () => {
    const handleChange = (event) => {
       setStatus(event.target.value);
       console.log('changing the status');
-    };
+   };
 
    const deleteHandler = async (id) => {
       const response = await Swal.fire({
@@ -234,7 +244,9 @@ const ManageAllOrders = () => {
                </Table>
             </TableContainer>
             {orders?.length === 0 && !loading && (
-               <Typography variant='h5' sx={{textAlign: 'center', mt: 5}}>No Orders Found</Typography>
+               <Typography variant='h5' sx={{ textAlign: 'center', mt: 5 }}>
+                  No Orders Found
+               </Typography>
             )}
             {loading && (
                <CircularProgress
