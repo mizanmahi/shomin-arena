@@ -21,8 +21,8 @@ See Server side Code: [shomin-backend](https://github.com/mizanmahi/shomin-arena
 
 ### Screenshots
 
-<a href="https://ibb.co/LnVM7wN"><img src="https://i.ibb.co/NZcXBhT/main-arena.png" alt="Screenshot" border="0"></a>
-<a href="https://ibb.co/rQQPr8T"><img src="https://i.ibb.co/3TTXZ6G/explore.png" alt="explore" border="0"></a>
+<a href="https://ibb.co/GWMPpJz"><img src="https://i.ibb.co/fkN0FSj/exp-arena.png" alt="exp-arena" border="0"></a>
+<a href="https://ibb.co/ZgDyZrs"><img src="https://i.ibb.co/pKFCmTD/main-arena.png" alt="main-arena" border="0"></a>
 <a href="https://ibb.co/pLSP52G"><img src="https://i.ibb.co/fxsSLMB/dashboard.png" alt="dashboard" border="0"></a>
 <a href="https://ibb.co/JmjT6Hk"><img src="https://i.ibb.co/MZkHw7N/signup.png" alt="signup" border="0"></a>
 <a href="https://ibb.co/dkfPk9c"><img src="https://i.ibb.co/F8h58vW/signin.png" alt="signin" border="0"></a>
