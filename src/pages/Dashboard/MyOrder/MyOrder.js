@@ -127,7 +127,7 @@ const MyOrder = () => {
                                     bgcolor: `${
                                        status === 'shipped'
                                           ? 'green'
-                                          : '#f14b4b'
+                                          : 'rgb(228, 106, 118)'
                                     }`,
                                     color: '#ffffff',
                                  }}
@@ -141,13 +141,13 @@ const MyOrder = () => {
                                  <Chip
                                     label={'Paid'}
                                     sx={{
-                                       bgcolor: 'green',
+                                       bgcolor: '#c2fbd7',
 
-                                       color: '#ffffff',
+                                       color: 'green',
                                     }}
                                  />
                               ) : (
-                                 <Button color='primary' variant='contained'>
+                                 <Button color='warning' variant='outlined'>
                                     Pay
                                  </Button>
                               )}

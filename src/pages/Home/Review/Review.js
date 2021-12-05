@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Paper, Rating, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import './review.css';
 
 const Review = ({ name, company, description, rating, createdAt }) => {
    return (
@@ -24,8 +25,9 @@ const Review = ({ name, company, description, rating, createdAt }) => {
       >
          <Typography
             variant='body1'
-            sx={{ mb: 3, color: '#2f333a' }}
+            sx={{ mb: 3, color: '#2f333d', fontWeight: 'bold' }}
             color='gray'
+            className='review-description'
          >
             {description}
          </Typography>
