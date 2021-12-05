@@ -38,10 +38,10 @@ const ManageAllOrders = () => {
       });
    }, [user.email]);
 
-   const handleChange = (event) => {
-      setStatus(event.target.value);
-      console.log('changing the status');
-   };
+   // const handleChange = (event) => {
+   //    setStatus(event.target.value);
+   //    console.log('changing the status');
+   // };
 
    const deleteHandler = async (id) => {
       const response = await Swal.fire({
@@ -103,6 +103,9 @@ const ManageAllOrders = () => {
                            Price
                         </TableCell>
                         <TableCell align='center' sx={{ fontWeight: 'bold' }}>
+                           Payment
+                        </TableCell>
+                        <TableCell align='center' sx={{ fontWeight: 'bold' }}>
                            Status
                         </TableCell>
                         <TableCell align='center' sx={{ fontWeight: 'bold' }}>
@@ -112,7 +115,14 @@ const ManageAllOrders = () => {
                   </TableHead>
                   <TableBody>
                      {orders?.map(
-                        ({ _id, orderItem, status, userName, email }) => (
+                        ({
+                           _id,
+                           orderItem,
+                           status,
+                           userName,
+                           email,
+                           payment,
+                        }) => (
                            <TableRow
                               key={_id}
                               sx={{
@@ -139,10 +149,35 @@ const ManageAllOrders = () => {
                                  {email}
                               </TableCell>
                               <TableCell align='center'>
-                                 {orderItem?.name}
+                                 {orderItem?.name.slice(0, 20)}
                               </TableCell>
                               <TableCell align='center'>
                                  {orderItem.price} tk
+                              </TableCell>
+                              <TableCell align='center'>
+                                 {payment?.status === 'succeeded' ? (
+                                    <Chip
+                                       size='small'
+                                       label={'Paid'}
+                                       sx={{
+                                          bgcolor: '#c2fbd7',
+                                          borderRadius: 2,
+                                          color: 'green',
+                                       }}
+                                    />
+                                 ) : (
+                                    <Chip
+                                       label='Not Paid'
+                                       sx={{
+                                          bgcolor: 'rgb(228, 106, 118)',
+                                          color: '#ffffff',
+                                          borderRadius: 2,
+                                       }}
+                                       size='small'
+                                    >
+                                       Pay
+                                    </Chip>
+                                 )}
                               </TableCell>
                               <TableCell align='center'>
                                  <Box
@@ -159,7 +194,7 @@ const ManageAllOrders = () => {
                                           bgcolor: `${
                                              status === 'shipped'
                                                 ? 'green'
-                                                : '#f14b4b'
+                                                : 'rgb(228, 106, 118)'
                                           }`,
                                           color: '#ffffff',
                                        }}
@@ -168,43 +203,27 @@ const ManageAllOrders = () => {
                                        {status === 'shipped' ? (
                                           <Button
                                              //  onClick={() => handleStatus(_id)}
+                                             size='small'
                                              variant='contained'
                                              color='success'
                                              disabled
                                              sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
                                                 fontSize: '.7rem',
                                              }}
                                           >
                                              Approve
-                                             <BeenhereIcon
-                                                sx={{
-                                                   fontSize: '1.1rem',
-                                                   ml: 1,
-                                                }}
-                                             />
                                           </Button>
                                        ) : (
                                           <Button
+                                             size='small'
                                              onClick={() => handleStatus(_id)}
                                              variant='contained'
                                              color='success'
                                              sx={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
                                                 fontSize: '.7rem',
                                              }}
                                           >
                                              Approve
-                                             <BeenhereIcon
-                                                sx={{
-                                                   fontSize: '1.1rem',
-                                                   ml: 1,
-                                                }}
-                                             />
                                           </Button>
                                        )}
                                        {/* <Box sx={{ minWidth: 120 }}>
