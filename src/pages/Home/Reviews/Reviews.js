@@ -4,6 +4,8 @@ import { Box } from '@mui/system';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import Review from '../Review/Review';
 import Spinner from '../../../components/Spinner/Spinner';
+import Slider from 'react-slick';
+import { slickSettings } from '../../../helpers/reactSlickSettings';
 
 const Reviews = () => {
    const [reviews, setReviews] = useState([]);
@@ -15,7 +17,7 @@ const Reviews = () => {
    }, []);
 
    return (
-      <Box component='section' sx={{mb: 5}}>
+      <Box component='section' sx={{ mb: 5 }}>
          <Container>
             <Box sx={{ textAlign: 'center', py: 8 }}>
                <Typography
@@ -29,15 +31,22 @@ const Reviews = () => {
                   variant='body2'
                   sx={{ maxWidth: '22rem', mx: 'auto', color: '#474747' }}
                >
-                 Our first priority is to make sure you are happy with your purchase
+                  Our first priority is to make sure you are happy with your
+                  purchase
                </Typography>
             </Box>
             <Box>
-               <Grid container spacing={3}>
-                  {reviews.length === 0 ? <Spinner /> : reviews.map((review) => (
-                     <Review key={review._id} {...review} />
-                  ))}
-               </Grid>
+               <Box>
+                  {reviews.length === 0 ? (
+                     <Spinner />
+                  ) : (
+                     <Slider {...slickSettings}>
+                        {reviews.map((review) => (
+                           <Review key={review._id} {...review} />
+                        ))}
+                     </Slider>
+                  )}
+               </Box>
             </Box>
          </Container>
       </Box>
