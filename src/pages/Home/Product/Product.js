@@ -13,7 +13,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useHistory } from 'react-router';
 import { Box } from '@mui/system';
 
-
 const Product = ({
    _id,
    name,

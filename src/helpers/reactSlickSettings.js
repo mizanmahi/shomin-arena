@@ -1,10 +1,14 @@
 export const slickSettings = {
    dots: true,
-   infinite: false,
-   speed: 500,
+   infinite: true,
+   autoplay: true,
+   autoplaySpeed: 3000,
+   speed: 1000,
+   pauseOnHover: true,
    slidesToShow: 3,
    slidesToScroll: 3,
    initialSlide: 0,
+   arrows: false,
    responsive: [
       {
          breakpoint: 1024,
