@@ -10,7 +10,7 @@ const Banner = () => {
          <Container>
             <Grid container spacing={2} sx={{ alignItems: 'center' }}>
                <Grid item md={6} sx={{ textAlign: 'left' }}>
-                  <Box>
+                  <Box data-aos='fade-right' data-aos-duration='1000' >
                      <Typography
                         variant='h6'
                         gutterBottom
@@ -52,7 +52,9 @@ const Banner = () => {
                </Grid>
                <Grid item md={6}>
                   <img
-                     data-aos='fade-down'
+                     data-aos='fade-up'
+                     data-aos-duration='1000'
+                     data-aos-delay='700'
                      src={bannerImage}
                      alt='bannerImage'
                      style={{ width: '100%' }}

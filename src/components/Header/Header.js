@@ -1,12 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {
-   Button,
-   Chip,
-   Container,
-   Drawer,
-   Typography,
-} from '@mui/material';
+import { Button, Chip, Container, Drawer, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,11 +8,24 @@ import { useAuth } from '../../hooks/useAuth';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import PersonIcon from '@mui/icons-material/Person';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+   '& .MuiBadge-badge': {
+      right: -3,
+      top: 0,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: '0 4px',
+   },
+}));
 
 const Header = () => {
    const theme = useTheme();
    const matches = useMediaQuery(theme?.breakpoints.down('sm'));
-   const { user, logoutUser } = useAuth();
+   const { user, logoutUser, admin } = useAuth();
    const [openDrawer, setOpenDrawer] = useState(false);
    const [open, setOpen] = useState(false);
 
@@ -67,21 +74,49 @@ const Header = () => {
                      <Link to='/headphones' style={{ textDecoration: 'none' }}>
                         <Button sx={{ color: '#ffffff' }}>Explore</Button>
                      </Link>
+                     {user && (
+                        <Link
+                           to='/dashboard'
+                           style={{ textDecoration: 'none' }}
+                        >
+                           <Button sx={{ color: '#ffffff' }}>Dashboard</Button>
+                        </Link>
+                     )}
+
+                     {!admin && user && (
+                        <Link
+                           to=''
+                           style={{ textDecoration: 'none' }}
+                        >
+                           <Button sx={{ color: '#ffffff' }}>
+                              <IconButton aria-label='cart'>
+                                 <StyledBadge
+                                    badgeContent={4}
+                                    sx={{ color: '#fff' }}
+                                 >
+                                    <ShoppingCartIcon
+                                       sx={{
+                                          color: '#fff',
+                                          fontSize: '1.7rem',
+                                       }}
+                                    />
+                                 </StyledBadge>
+                              </IconButton>
+                           </Button>
+                        </Link>
+                     )}
+
                      {user ? (
                         <>
-                           <Link
-                              to='/dashboard'
-                              style={{ textDecoration: 'none' }}
-                           >
-                              <Button sx={{ color: '#ffffff' }}>
-                                 Dashboard
-                              </Button>
-                           </Link>
-
                            <Chip
-                              sx={{ ml: 1, bgcolor: '#ff7004', color: '#fff', fontSize: '1rem' }}
+                              sx={{
+                                 ml: 1,
+                                 bgcolor: '#ff7004',
+                                 color: '#fff',
+                                 fontSize: '1rem',
+                              }}
                               // color='primary'
-                              icon={<PersonIcon sx={{fill: '#fff'}} />}
+                              icon={<PersonIcon sx={{ fill: '#fff' }} />}
                               label={user.displayName}
                            />
                            <Button
@@ -133,7 +168,9 @@ const Header = () => {
                            to='/dashboard'
                            style={{ textDecoration: 'none' }}
                         >
-                           <Button sx={{ color: '#ffffff', mb: 2 }}>Dashboard</Button>
+                           <Button sx={{ color: '#ffffff', mb: 2 }}>
+                              Dashboard
+                           </Button>
                         </Link>
 
                         <Chip
