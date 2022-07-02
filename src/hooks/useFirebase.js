@@ -46,7 +46,7 @@ const useFirebase = () => {
          // redirect to home page
          history.push('/');
       } catch (error) {
-         if (error.message.includes('auth/email-already-in-use')) {       
+         if (error.message.includes('auth/email-already-in-use')) {
             setAuthError('Email already in use!');
          }
       } finally {

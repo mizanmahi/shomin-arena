@@ -22,15 +22,13 @@ const Login = () => {
       formState: { errors },
    } = useForm();
 
-
    const history = useHistory();
    const location = useLocation();
    const { loginWithEmailAndPassword, authError, userLoading } = useAuth();
 
    const handleLogin = async ({ email, password }) => {
-      
       loginWithEmailAndPassword(email, password, location, history);
-      reset()
+      reset();
    };
 
    console.log(errors);
@@ -94,7 +92,7 @@ const Login = () => {
                         py: 8,
                         maxWidth: '30rem',
                         textAlign: 'center',
-                        borderRadius: 2
+                        borderRadius: 2,
                      }}
                   >
                      <Typography variant='h5' align='center'>

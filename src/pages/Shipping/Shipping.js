@@ -15,6 +15,8 @@ import { axiosInstance } from '../../helpers/axiosInstance';
 import { useAuth } from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { ToastContainer } from 'react-toastify';
+import Spinner from '../../components/Spinner/Spinner';
+import Product from '../Home/Product/Product';
 
 const Shipping = () => {
    const { id } = useParams();
@@ -76,6 +78,26 @@ const Shipping = () => {
          });
    }, [id]);
 
+   const [headphones, setHeadphones] = useState([]);
+   const [loading, setLoading] = useState(true);
+
+   useEffect(() => {
+      axiosInstance
+         .get('/headphones')
+         .then(({ data }) => {
+            setHeadphones(
+               data.filter(
+                  (item) =>
+                     item.name.includes(headphone.name.slice(0, 3)) &&
+                     item._id !== headphone._id
+               )
+            );
+
+            setLoading(false);
+         })
+         .catch((err) => console.log(err.message));
+   }, [headphone.name, headphone._id]);
+
    return (
       <>
          <Header />
@@ -99,7 +121,7 @@ const Shipping = () => {
                               }}
                            />
                         ) : (
-                           <CircularProgress sx={{mr: 5}} />
+                           <CircularProgress sx={{ mr: 5 }} />
                         )}
                         <Box sx={{ textAlign: 'left' }}>
                            <Typography variant='body2'>
@@ -212,6 +234,38 @@ const Shipping = () => {
                </Grid>
             </Container>
          </Box>
+         <Container>
+            <Box sx={{ mb: 10 }}>
+               <Box sx={{ textAlign: 'center', py: 8 }}>
+                  <Typography
+                     variant='h4'
+                     sx={{ fontWeight: 'bold', color: '#2f333a' }}
+                     gutterBottom
+                  >
+                     Related Products
+                  </Typography>
+                  <Typography
+                     variant='body2'
+                     sx={{ maxWidth: '22rem', mx: 'auto', color: '#474747' }}
+                  >
+                     Related products are displayed for your convenience.
+                  </Typography>
+               </Box>
+               <Box>
+                  <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+                     {loading && !headphone && !headphones ? (
+                        <Spinner />
+                     ) : (
+                        headphones
+                           .slice(0, 4)
+                           .map((headphone) => (
+                              <Product key={headphone._id} {...headphone} />
+                           ))
+                     )}
+                  </Grid>
+               </Box>
+            </Box>
+         </Container>
          <ToastContainer
             position='top-left'
             autoClose={1000}

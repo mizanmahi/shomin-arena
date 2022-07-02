@@ -6,7 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
 import { useTheme } from '@mui/material/styles';
 
-const Topbar = () => {
+const TopBar = () => {
    const theme = useTheme();
    const matches = useMediaQuery(theme?.breakpoints?.down('sm'));
 
@@ -75,4 +75,4 @@ const Topbar = () => {
    );
 };
 
-export default Topbar;
+export default TopBar;

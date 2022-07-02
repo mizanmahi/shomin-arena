@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Button, Chip, Container, Drawer, Typography } from '@mui/material';
+import { Avatar, Button, Chip, Container, Drawer, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
+import { axiosInstance } from '../../helpers/axiosInstance';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
    '& .MuiBadge-badge': {
@@ -27,11 +28,11 @@ const Header = () => {
    const matches = useMediaQuery(theme?.breakpoints.down('sm'));
    const { user, logoutUser, admin } = useAuth();
    const [openDrawer, setOpenDrawer] = useState(false);
-   const [open, setOpen] = useState(false);
 
-   const handleClose = () => {
-      setOpen(false);
-   };
+
+   const [orders, setOrders] = useState([]);
+   const [loading, setLoading] = useState(true);
+   
 
    const handleLogout = () => {
       logoutUser();
@@ -40,6 +41,14 @@ const Header = () => {
    useEffect(() => {
       setOpenDrawer(false);
    }, [matches]);
+
+   useEffect(() => {
+      axiosInstance.get(`/myOrders/?email=${user?.email}`).then(({ data }) => {
+         setOrders(data);
+         console.log(data);
+         setLoading(false);
+      });
+   }, [user]);
 
    return (
       <Box component='section' style={{ background: '#2F333A' }}>
@@ -85,13 +94,13 @@ const Header = () => {
 
                      {!admin && user && (
                         <Link
-                           to=''
+                           to='/dashboard'
                            style={{ textDecoration: 'none' }}
                         >
                            <Button sx={{ color: '#ffffff' }}>
                               <IconButton aria-label='cart'>
                                  <StyledBadge
-                                    badgeContent={4}
+                                    badgeContent={!loading && orders.length}
                                     sx={{ color: '#fff' }}
                                  >
                                     <ShoppingCartIcon
@@ -119,6 +128,12 @@ const Header = () => {
                               icon={<PersonIcon sx={{ fill: '#fff' }} />}
                               label={user.displayName}
                            />
+
+{/* <Avatar
+        alt="Remy Sharp"
+        src="/static/images/avatar/1.jpg"
+        sx={{ width: 56, height: 56,}}
+      /> */}
                            <Button
                               sx={{ color: '#ffffff' }}
                               onClick={handleLogout}
