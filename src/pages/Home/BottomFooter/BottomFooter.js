@@ -1,13 +1,9 @@
-import { Container, Typography, useMediaQuery } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
-import EmailIcon from '@mui/icons-material/Email';
-import { useTheme } from '@mui/material/styles';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 
 const BottomFooter = () => {
-   const theme = useTheme();
-   const matches = useMediaQuery(theme?.breakpoints?.down('sm'));
 
    const centerVertically = {
       display: 'flex',

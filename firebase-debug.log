@@ -1,0 +1,29 @@
+[debug] [2022-07-03T18:57:06.796Z] ----------------------------------------------------------------------
+[debug] [2022-07-03T18:57:06.799Z] Command:       C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-07-03T18:57:06.800Z] CLI Version:   11.2.0
+[debug] [2022-07-03T18:57:06.800Z] Platform:      win32
+[debug] [2022-07-03T18:57:06.800Z] Node Version:  v16.6.0
+[debug] [2022-07-03T18:57:06.801Z] Time:          Mon Jul 04 2022 00:57:06 GMT+0600 (Bangladesh Standard Time)
+[debug] [2022-07-03T18:57:06.801Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-07-03T18:57:06.876Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-07-03T18:57:06.876Z] > authorizing via signed-in user (mizanmahi24@gmail.com)
+[debug] [2022-07-03T18:57:06.876Z] [iam] checking project shomin-arena for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-07-03T18:57:06.880Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/shomin-arena:testIamPermissions [none]
+[debug] [2022-07-03T18:57:06.880Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/shomin-arena:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-07-03T18:57:08.315Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/shomin-arena:testIamPermissions 200
+[debug] [2022-07-03T18:57:08.316Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/shomin-arena:testIamPermissions {}
+[debug] [2022-07-03T18:57:08.316Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project shomin-arena:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2022-07-03T18:57:08.317Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/shomin-arena [none]
+[debug] [2022-07-03T18:57:08.869Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/shomin-arena 403
+[debug] [2022-07-03T18:57:08.869Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/shomin-arena {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2022-07-03T18:57:08.870Z] HTTP Error: 403, The caller does not have permission
+[debug] [2022-07-03T18:57:09.072Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (C:\Users\mizanmahi\AppData\Roaming\nvm\v16.6.0\node_modules\firebase-tools\lib\responseToError.js:49:12)
+    at RetryOperation._fn (C:\Users\mizanmahi\AppData\Roaming\nvm\v16.6.0\node_modules\firebase-tools\lib\apiv2.js:287:77)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[error] 
+[error] Error: Failed to get Firebase project shomin-arena. Please make sure the project exists and your account has permission to access it.

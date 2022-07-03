@@ -4,7 +4,6 @@ import {
    Card,
    CardContent,
    CardMedia,
-   Chip,
    Grid,
    Rating,
    Typography,
@@ -73,7 +72,7 @@ const Product = ({
                      : `data:image/jpeg;base64,${imageUrl}`
                }
             />
-            <CardContent sx={{ textAlign: 'center' }} sx={{ mt: 1.5 }}>
+            <CardContent sx={{ textAlign: 'center', mt: 1.5 }}>
                <Typography
                   gutterBottom
                   variant='body1'

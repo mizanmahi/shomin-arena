@@ -3,10 +3,6 @@ import {
    Chip,
    CircularProgress,
    Container,
-   FormControl,
-   InputLabel,
-   MenuItem,
-   Select,
    Typography,
 } from '@mui/material';
 import { Box } from '@mui/system';
@@ -23,13 +19,11 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { toast, ToastContainer } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAuth } from '../../../hooks/useAuth';
-import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 const ManageAllOrders = () => {
    const [orders, setOrders] = useState([]);
    const { user } = useAuth();
    const [loading, setLoading] = useState(true);
-   const [test, setStatus] = useState('');
 
    useEffect(() => {
       axiosInstance.get(`/orders`).then(({ data }) => {

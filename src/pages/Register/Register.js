@@ -11,7 +11,7 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useAuth } from '../../hooks/useAuth';
 
 const Register = () => {

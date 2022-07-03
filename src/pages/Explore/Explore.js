@@ -5,7 +5,7 @@ import {
    TextField,
    Typography,
 } from '@mui/material';
-import { bgcolor, Box } from '@mui/system';
+import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from '../../components/Spinner/Spinner';
@@ -15,7 +15,7 @@ import Product from '../Home/Product/Product';
 const Explore = () => {
    const [headphones, setHeadphones] = useState([]);
    const [loading, setLoading] = useState(true);
-   const [searchTerm, setSearchTerm] = useState('');
+
    const [displayHeadphones, setDisplayHeadphones] = useState([]);
 
    useEffect(() => {
@@ -30,7 +30,6 @@ const Explore = () => {
    }, []);
 
    const changeHandler = (e) => {
-      setSearchTerm(e.target.value);
       const filteredHeadphones = headphones.filter((headphone) => {
          return headphone.name
             .toLowerCase()

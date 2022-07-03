@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import Review from '../Review/Review';
