@@ -1,16 +1,17 @@
 import {
    Breadcrumbs,
-   Button,
    CircularProgress,
    Container,
    Grid,
    TextField,
    Typography,
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { Box } from '@mui/system';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import LightTextField from '../../components/Custom/LightTextField';
 import { useAuth } from '../../hooks/useAuth';
 // import { toast, ToastContainer } from 'react-toastify';
 
@@ -95,11 +96,11 @@ const Login = () => {
                         borderRadius: 2,
                      }}
                   >
-                     <Typography variant='h5' align='center'>
+                     <Typography variant='h5' align='center' sx={{ mb: 2 }}>
                         Sign In
                      </Typography>
 
-                     <TextField
+                     <LightTextField
                         {...register('email', {
                            required: {
                               value: true,
@@ -110,15 +111,14 @@ const Login = () => {
                               message: 'Invalid email address',
                            },
                         })}
-                        variant='standard'
-                        sx={{ width: '60%', mb: 2 }}
-                        label='Email'
+                        sx={{ width: '60%', my: 2 }}
+                        placeholder='Email'
                         type='email'
                         error={errors.email ? true : false}
                         helperText={errors.email ? errors?.email.message : ''}
                         required
                      />
-                     <TextField
+                     <LightTextField
                         {...register('password', {
                            required: {
                               value: true,
@@ -130,28 +130,26 @@ const Login = () => {
                                  'Password must be at least 6 characters long',
                            },
                         })}
-                        variant='standard'
                         sx={{ width: '60%', mb: 2 }}
-                        label='Password'
                         type='password'
-                        // required
-                        error={errors.password ? true : false}
-                        helperText={
-                           errors.password ? errors.password.message : ''
-                        }
+                        placeholder='Type Your password'
+                        error={errors?.password ? true : false}
+                        helperText={errors?.password?.message}
                      />
 
-                     <Button
+                     <LoadingButton
                         type='submit'
                         variant='contained'
-                        sx={{ background: '#ff7004', width: '60%', mt: 3 }}
+                        sx={{
+                           background: '#ff7004',
+                           width: '60%',
+                           mt: 1,
+                           py: 1.5,
+                        }}
+                        loading={userLoading}
                      >
-                        {userLoading ? (
-                           <CircularProgress color='common' size='1.5rem' />
-                        ) : (
-                           'Sign in'
-                        )}
-                     </Button>
+                        Sign In
+                     </LoadingButton>
                      <Typography sx={{ mt: 1 }}>
                         Need an account? <Link to='register'>Register</Link>
                      </Typography>
@@ -162,17 +160,6 @@ const Login = () => {
                </Grid>
             </Grid>
          </Container>
-         {/* <ToastContainer
-            position='top-left'
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-         /> */}
       </Box>
    );
 };

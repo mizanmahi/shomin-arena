@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Button, Container, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React from 'react';
@@ -6,77 +5,20 @@ import Product from '../Product/Product';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import Spinner from '../../../components/Spinner/Spinner';
 import { Link } from 'react-router-dom';
-
-/* const products = [
-   {
-      id: '1',
-      name: 'Shuer headset -SE5219',
-      price: 855,
-      discountedPrice: 455,
-      imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
-      description:
-         'An amazing classsic wireless headphone with deep bass. Available in four colors',
-   },
-   {
-      id: '2',
-      name: 'Shuer headset -SE5222',
-      price: 655,
-      discountedPrice: 455,
-      imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
-      description:
-         'An amazing classsic wireless headphone with deep bass. Available in four colors',
-   },
-   {
-      id: '3',
-      name: 'Shuer headset -SE5247',
-      price: 655,
-      discountedPrice: 455,
-      imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
-      description:
-         'An amazing classsic wireless headphone with deep bass. Available in four colors',
-   },
-   {
-      id: '4',
-      name: 'QKZ DM10',
-      price: 555,
-      discountedPrice: 350,
-      imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
-      description:
-         'An amazing classsic wireless headphone with deep bass. Available in four colors',
-   },
-   {
-      id: '5',
-      name: 'UISIi HM13 Gaming headphone',
-      price: 550,
-      discountedPrice: 335,
-      imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
-      description:
-         'An amazing classsic wireless headphone with deep bass. Available in four colors',
-   },
-   {
-      id: '6',
-      name: 'JBL 881A',
-      price: 1100,
-      discountedPrice: 750,
-      imageUrl: 'https://i.ibb.co/wRxsWBs/shuer-green.jpg',
-      description:
-         'An amazing classsic wireless headphone with deep bass. Available in four colors',
-   },
-]; */
+import { useQuery } from 'react-query';
 
 const Products = () => {
-   const [headphones, setHeadphones] = useState([]);
-   const [loading, setLoading] = useState(true);
+   const { data, isLoading, isError, error } = useQuery('headphones', () =>
+      axiosInstance.get('/headphones')
+   );
 
-   useEffect(() => {
-      axiosInstance
-         .get('/headphones')
-         .then(({ data }) => {
-            setHeadphones(data);
-            setLoading(false);
-         })
-         .catch((err) => console.log(err.message));
-   }, []);
+   if (isError) {
+      return (
+         <Typography sx={{ textAlign: 'center', my: 6 }} color='error'>
+            {error.message}
+         </Typography>
+      );
+   }
 
    return (
       <Box component='section'>
@@ -98,34 +40,36 @@ const Products = () => {
             </Box>
             <Box>
                <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
-                  {loading ? (
+                  {isLoading ? (
                      <Spinner />
                   ) : (
-                     headphones.slice(headphones.length - 8, headphones.length).map((headphone) => (
-                        <Product key={headphone._id} {...headphone} />
-                     ))
+                     data?.data
+                        .slice(data?.data.length - 8, data?.data.length)
+                        .map((headphone) => (
+                           <Product key={headphone._id} {...headphone} />
+                        ))
                   )}
                </Grid>
                <Link to='/headphones' style={{ textDecoration: 'none' }}>
-                        <Button
-                           variant='contained'
-                           color='primary'
-                           sx={{
-                              borderRadius: 0,
-                              background: '#ff7004',
-                              display: 'block',
-                              mx: 'auto',
-                              '&:hover': {
-                                 bgcolor: '#ff7059',
-                              },
-                              px: 2.5,
-                              py: 1,
-                              mt: 5,
-                           }}
-                        >
-                           View All
-                        </Button>
-                     </Link>
+                  <Button
+                     variant='contained'
+                     color='primary'
+                     sx={{
+                        borderRadius: 0,
+                        background: '#ff7004',
+                        display: 'block',
+                        mx: 'auto',
+                        '&:hover': {
+                           bgcolor: '#ff7059',
+                        },
+                        px: 2.5,
+                        py: 1,
+                        mt: 5,
+                     }}
+                  >
+                     View All
+                  </Button>
+               </Link>
             </Box>
          </Container>
       </Box>
