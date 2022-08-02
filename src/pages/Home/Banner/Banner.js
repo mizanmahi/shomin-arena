@@ -10,7 +10,7 @@ const Banner = () => {
          <Container>
             <Grid container spacing={2} sx={{ alignItems: 'center' }}>
                <Grid item md={6} sx={{ textAlign: 'left' }}>
-                  <Box data-aos='fade-right' data-aos-duration='1000' >
+                  <Box data-aos='fade-right' data-aos-duration='1000'>
                      <Typography
                         variant='h6'
                         gutterBottom
@@ -35,11 +35,7 @@ const Banner = () => {
                            variant='contained'
                            color='primary'
                            sx={{
-                              borderRadius: 0,
                               background: '#ff7004',
-                              '&:hover': {
-                                 bgcolor: '#ff7059',
-                              },
                               px: 2.5,
                               py: 1,
                               mt: 5,

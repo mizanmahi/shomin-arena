@@ -7,10 +7,30 @@ import Spinner from '../../../components/Spinner/Spinner';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
+/* 
+   data => data is the data that is returned from the query
+   isLoading => isLoading is a boolean that is true if the query is loading
+   isError => isError is a boolean that is true if the query has an error
+   error => error is the error that is returned from the query, it is undefined if there is no error, contains the error message if there is an error
+   isFetching => isFetching is a boolean that is true if the query is fetching in the background to update the data
+*/
+
 const Products = () => {
-   const { data, isLoading, isError, error } = useQuery('headphones', () =>
-      axiosInstance.get('/headphones')
+   const { data, isLoading, isError, error, isFetching } = useQuery(
+      'headphones',
+      () => axiosInstance.get('/headphones'),
+      {
+         cacheTime: 5000, // cache the data for 5 seconds for the first time the data is fetched for this query
+         // retry: false, // don't retry the query if it fails, default is 5 seconds
+         staleTime: 20000, // within 10 seconds no new data will be fetched, the data will be used from the cache, isFetching and isLoading will be false, query will remain fresh for 10 seconds, default is 0 seconds
+         refetchOnMount: true, // the data will be fetched when the component is mounted, possible values are true or false or always, default is false
+      }
    );
+
+   console.log({
+      isLoading,
+      isFetching,
+   });
 
    if (isError) {
       return (
@@ -55,13 +75,9 @@ const Products = () => {
                      variant='contained'
                      color='primary'
                      sx={{
-                        borderRadius: 0,
                         background: '#ff7004',
                         display: 'block',
                         mx: 'auto',
-                        '&:hover': {
-                           bgcolor: '#ff7059',
-                        },
                         px: 2.5,
                         py: 1,
                         mt: 5,

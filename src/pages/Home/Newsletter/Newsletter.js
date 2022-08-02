@@ -2,6 +2,7 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import LightTextField from '../../../components/Custom/LightTextField';
 import { axiosInstance } from '../../../helpers/axiosInstance';
 import news from '../../../images/news.svg';
 
@@ -21,8 +22,8 @@ const Newsletter = () => {
       if (data.insertedId) {
          toast.success('Email was Added Successfully!');
          setNewsletterEmail('');
-      }else {
-         toast.warn('Email already exist! Try with a new one.')
+      } else {
+         toast.warn('Email already exist! Try with a new one.');
       }
    };
 
@@ -48,9 +49,9 @@ const Newsletter = () => {
                      sx={{ mt: 3 }}
                      onSubmit={handleNewsletter}
                   >
-                     <TextField
+                     <LightTextField
                         type='email'
-                        label='Email'
+                        placeholder='Email'
                         value={newsletterEmail}
                         onChange={(e) => setNewsletterEmail(e.target.value)}
                         sx={{
@@ -66,12 +67,10 @@ const Newsletter = () => {
                         variant='contained'
                         color='primary'
                         sx={{
-                           borderRadius: 0,
-                           background: '#2f333a',
                            px: 2.5,
                            py: 1,
                            mt: 2,
-                           display: 'block',
+                           display: 'block'
                         }}
                      >
                         Submit

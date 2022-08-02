@@ -30,15 +30,14 @@ const Product = ({
          item
          xs={12}
          sm={6}
-         md={3}
+         md={4}
          sx={{ display: 'flex', justifyContent: 'center' }}
       >
          <Card
             sx={{
                maxWidth: '100%',
-               minWidth: '275px',
+               width: '275px',
                position: 'relative',
-               boxShadow: 0,
                bgcolor: '#f4f5f8',
                borderRadius: 3,
                boxShadow:
@@ -47,21 +46,6 @@ const Product = ({
             data-aos='fade-up'
             data-aos-duration='1000'
          >
-            {/* <Chip
-               label={
-                  -Math.round(((price - discountedPrice) / price) * 100) + '%'
-               }
-               size='small'
-               color='primary'
-               sx={{
-                  position: 'absolute',
-                  top: 8,
-                  left: 8,
-                  borderRadius: 0,
-                  background: '#c2fbd7',
-                  color: 'green',
-               }}
-            /> */}
             <CardMedia
                component='img'
                alt='green iguana'
@@ -71,6 +55,7 @@ const Product = ({
                      ? imageUrl
                      : `data:image/jpeg;base64,${imageUrl}`
                }
+
             />
             <CardContent sx={{ textAlign: 'center', mt: 1.5 }}>
                <Typography
@@ -98,14 +83,6 @@ const Product = ({
                      component='div'
                      sx={{ fontWeight: 600 }}
                   >
-                     {/* <span
-                        style={{
-                           color: 'gray',
-                           textDecoration: 'line-through',
-                        }}
-                     >
-                        Tk {price}
-                     </span>{' '} */}
                      {discountedPrice}tk
                   </Typography>
                   <Rating name='read-only' value={4} size='small' readOnly />
