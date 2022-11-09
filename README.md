@@ -8,12 +8,14 @@ See Server side Code: [shomin-backend](https://github.com/mizanmahi/shomin-arena
 
 ### Built with
 
--  React js for frontend
--  Material ui for design
+-  React js 
+-  Material ui
+-  React query
+-  Axios
 -  React Icons
 -  React Router dom
 -  Firebase for authentication
--  React hook form for form validation
+-  React hook form
 -  React loader spinner
 -  Node
 -  Mongodb
